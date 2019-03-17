@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Update child name"
+        android:ems="10"
+        android:id="@+id/update_child_name"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Update parent email"
+        android:ems="10"
+        android:id="@+id/update_parent_name"
+        android:layout_below="@+id/update_child_name"
+        />
+
+    <Button
+        android:text="Update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_update_child_info"
+        android:layout_below="@id/update_parent_name"/>
+
+
+</RelativeLayout>

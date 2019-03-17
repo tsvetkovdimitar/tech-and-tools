@@ -3,8 +3,10 @@ package com.d1m1tr.tech_and_tools_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -106,6 +108,19 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        listViewChildren.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Child child = childrenList.get(i);
+
+                showUpdateDialog(child.getChildId(), child.getChildName());
+                return true;
+            }
+        });
+
+
+
     }
 
     @Override
@@ -135,6 +150,67 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void showUpdateDialog(final String childId, String childName){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inslater = getLayoutInflater();
+
+        final View dialogView = inslater.inflate(R.layout.update_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        final EditText editTextName = dialogView.findViewById(R.id.update_child_name);
+        final EditText editTextEmail = dialogView.findViewById(R.id.update_parent_name);
+        final Button btnUpdate = dialogView.findViewById(R.id.btn_update_child_info);
+
+        dialogBuilder.setTitle("Update activity information for " + childName);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String name = editTextName.getText().toString().trim();
+                String email = editTextEmail.getText().toString().trim();
+
+                if(TextUtils.isEmpty(name)){
+
+                    editTextName.setError("Name is required");
+                    return;
+
+                }
+                else if(TextUtils.isEmpty(email)){
+
+                    editTextEmail.setError("Email is required");
+                    return;
+                }
+
+                updateChild(childId, name, email);
+
+                alertDialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private boolean updateChild(String childId, String childName, String parentEmail){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("child").child(childId);
+
+        Child child = new Child(childId, childName, parentEmail);
+
+        databaseReference.setValue(child);
+
+        Toast.makeText(this, "Child information updated successfully", Toast.LENGTH_LONG).show();
+
+        return true;
 
     }
 
