@@ -2,6 +2,7 @@ package com.d1m1tr.tech_and_tools_project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,8 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddChildActivity extends AppCompatActivity {
 
@@ -23,6 +30,8 @@ public class AddChildActivity extends AppCompatActivity {
     private Button btnAddActivity;
 
     DatabaseReference databaseActivities;
+
+    List<DailyActivity> dailyActivities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,8 @@ public class AddChildActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        dailyActivities = new ArrayList<>();
+
         String id = intent.getStringExtra(ProfileActivity.CHILD_ID);
         String name = intent.getStringExtra(ProfileActivity.CHILD_NAME);
 
@@ -49,6 +60,36 @@ public class AddChildActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 addChildActivity();
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        databaseActivities.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                dailyActivities.clear();
+
+                for(DataSnapshot childactivitySnapshot: dataSnapshot.getChildren() ){
+
+                    DailyActivity dailyActivity = childactivitySnapshot.getValue(DailyActivity.class);
+                    dailyActivities.add(dailyActivity);
+
+                }
+
+                ChildActivityList childActivityListAdapter = new ChildActivityList(AddChildActivity.this, dailyActivities);
+                listViewActivities.setAdapter(childActivityListAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
