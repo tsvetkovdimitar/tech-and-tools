@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "850096059926",
+    "firebase_url": "https://tech-and-tools.firebaseio.com",
+    "project_id": "tech-and-tools",
+    "storage_bucket": "tech-and-tools.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850096059926:android:215e30de63effb73",
+        "android_client_info": {
+          "package_name": "com.d1m1tr.tech_and_tools_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850096059926-nk9et3dve2dgc766p5dkamq1fjrmhrl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.d1m1tr.tech_and_tools_project",
+            "certificate_hash": "eb22407a93e01c5c15ee5cb718af2d00a8993d4f"
+          }
+        },
+        {
+          "client_id": "850096059926-plsic2pd6ltedghctr3d87qss28uhof0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB51rVYoZEYGVgcQduzUKZrmcv9PIE9Bz4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850096059926-plsic2pd6ltedghctr3d87qss28uhof0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

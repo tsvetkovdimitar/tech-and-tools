@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userEmail"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:text="TextView"/>
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_profile_signout"
+        android:layout_below="@id/userEmail"
+        android:text="Sign Out"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Child name"
+        android:id="@+id/edt_child_name"
+        android:layout_below="@id/btn_profile_signout"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Parent email"
+        android:ems="10"
+        android:id="@+id/edt_parent_email"
+        android:layout_below="@id/edt_child_name"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_add_child"
+        android:layout_below="@id/edt_parent_email"
+        android:text="Add"/>
+    
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_children"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_add_child">
+
+    </ListView>
+
+
+
+</RelativeLayout>
