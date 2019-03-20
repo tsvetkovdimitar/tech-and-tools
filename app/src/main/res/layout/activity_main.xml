@@ -27,20 +27,21 @@
         android:hint="Password" />
 
     <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="SIGNUP"
-        android:layout_below="@id/edt_password"/>
-
-    <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="LOGIN"
-        android:layout_below="@id/btn_signup"/>
+        android:layout_below="@+id/edt_email"/>
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="SIGNUP"
+        android:layout_below="@+id/btn_login"/>
+
 
 
 

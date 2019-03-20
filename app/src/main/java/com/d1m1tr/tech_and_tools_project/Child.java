@@ -1,5 +1,8 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Child {
 
     String childId;

@@ -29,7 +29,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String CHILD_NAME = "childName";
-    public static final String CHILD_ID = "childID";
+    public static final String CHILD_ID = "childId";
 
     TextView userEmail;
     Button userLogOut;
