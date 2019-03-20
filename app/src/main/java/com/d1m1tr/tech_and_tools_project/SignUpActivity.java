@@ -13,52 +13,62 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText userEmail;
-    EditText userPassword;
-    Button signIn;
+    private EditText email;
+    private EditText password;
+    private Button signUp;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        userEmail = findViewById(R.id.edt_signup_email);
-        userPassword = findViewById(R.id.edt_signup_password);
-        signIn = findViewById(R.id.btn_register);
-
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
-        signIn.setOnClickListener(new View.OnClickListener() {
+        email = findViewById(R.id.edt_signup_email);
+        password = findViewById(R.id.edt_signup_password);
+        signUp = findViewById(R.id.btn_register);
+
+
+        if(mUser != null){
+
+            startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
+
+        }
+
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                mAuth.signInWithEmailAndPassword(userEmail.getText().toString(), userPassword.getText().toString())
-
+                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
 
-                        if(task.isSuccessful()){
+                                    Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
 
-                            startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
+                                }
+                                else{
 
-                        }
-                        else{
+                                    Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
 
-                        }
 
-                    }
-                });
-
+                            }
+                        });
             }
         });
+
     }
+
 }

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="LOGIN"
-        android:layout_below="@+id/edt_email"/>
+        android:layout_below="@+id/edt_password"/>
 
     <Button
         android:id="@+id/btn_signup"

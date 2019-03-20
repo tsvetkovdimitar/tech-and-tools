@@ -30,33 +30,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-
         email = findViewById(R.id.edt_email);
         password = findViewById(R.id.edt_password);
-        signUp = findViewById(R.id.btn_signup);
         logIn = findViewById(R.id.btn_login);
+        signUp = findViewById(R.id.btn_signup);
 
+        mAuth = FirebaseAuth.getInstance();
 
-        if(mUser != null){
-
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-
-        }
-
-        signUp.setOnClickListener(new View.OnClickListener() {
+        logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if(task.isSuccessful()){
 
-                                    Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
 
                                 }
                                 else{
@@ -65,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
 
-
                             }
                         });
+
             }
         });
 
-        logIn.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
