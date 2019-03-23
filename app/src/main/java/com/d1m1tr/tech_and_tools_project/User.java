@@ -8,7 +8,6 @@ public class User {
     public User(){
 
 
-
     }
 
     public User(String userId, String userEmail){

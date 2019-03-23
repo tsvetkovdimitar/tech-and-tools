@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,26 +42,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                String loginEmail = email.getText().toString().trim();
+                String loginPassword = password.getText().toString().trim();
 
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if (!(TextUtils.isEmpty(loginEmail) && TextUtils.isEmpty(loginPassword))){
 
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                if(task.isSuccessful()){
+                    mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
 
-                                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
-                                }
-                                else{
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        if (task.isSuccessful()) {
 
-                                }
+                                            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
 
-                            }
-                        });
+                                        } else {
+
+                                            Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                                        }
+
+                                    }
+                            });
+
+                }
+                else{
+
+                    Toast.makeText(MainActivity.this, "Please, enter email and password.", Toast.LENGTH_LONG).show();
+
+                }
+
 
             }
         });

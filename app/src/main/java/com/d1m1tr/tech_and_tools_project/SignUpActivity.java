@@ -47,7 +47,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+
+                mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -60,12 +61,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 else{
 
                                     Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
                                 }
 
 
                             }
                         });
+
             }
         });
 

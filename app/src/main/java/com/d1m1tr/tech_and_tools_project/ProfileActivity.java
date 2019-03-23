@@ -41,7 +41,9 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
-    DatabaseReference databaseChild;
+    private DatabaseReference databaseChild;
+
+   // private DocumentReference mDocRef = FirebaseFirestore.getInstance().document()
 
     ListView listViewChildren;
 
@@ -225,7 +227,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             Child child = new Child(id, name, email);
 
-            databaseChild.child(id).setValue(child);
+            databaseChild.push().setValue(child);
 
             Toast.makeText(this, "Child added", Toast.LENGTH_LONG).show();
 
