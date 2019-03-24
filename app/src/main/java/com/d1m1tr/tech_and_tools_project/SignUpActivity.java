@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,28 +48,41 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String signUpEmail = email.getText().toString().trim();
+                String signUpPassword = password.getText().toString().trim();
 
-                mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!(TextUtils.isEmpty(signUpEmail) && TextUtils.isEmpty(signUpPassword))){
 
-                                if(task.isSuccessful()){
+                    mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                    Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
+                                    if(task.isSuccessful()){
+
+                                        Intent signupIntent = new Intent(SignUpActivity.this, ProfileActivity.class);
+                                        startActivity(signupIntent);
+                                        finish();
+                                        Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
+
+                                    }
+                                    else{
+
+                                        Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                    }
+
 
                                 }
-                                else{
+                            });
 
-                                    Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                }
+                else{
 
-                                }
+                    Toast.makeText(SignUpActivity.this, "Please, enter email and password.", Toast.LENGTH_LONG).show();
 
-
-                            }
-                        });
-
+                }
             }
         });
 

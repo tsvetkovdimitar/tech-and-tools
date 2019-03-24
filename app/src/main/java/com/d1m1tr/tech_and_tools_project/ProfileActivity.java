@@ -31,23 +31,22 @@ public class ProfileActivity extends AppCompatActivity {
     public static final String CHILD_NAME = "childName";
     public static final String CHILD_ID = "childId";
 
-    TextView userEmail;
-    Button userLogOut;
+    private TextView userEmail;
+    private Button userLogOut;
 
-    EditText childName;
-    EditText parentEmail;
-    Button btnAddChild;
+    private EditText childName;
+    private EditText parentEmail;
+    private Button btnAddChild;
+    private Button btnAddUserDetails;
 
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     private DatabaseReference databaseChild;
 
-   // private DocumentReference mDocRef = FirebaseFirestore.getInstance().document()
+    private ListView listViewChildren;
 
-    ListView listViewChildren;
-
-    List<Child> childrenList;
+    private List<Child> childrenList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
         childName = findViewById(R.id.edt_child_name);
         parentEmail = findViewById(R.id.edt_parent_email);
         btnAddChild = findViewById(R.id.btn_add_child);
+
+        btnAddUserDetails = findViewById(R.id.btn_add_user_details);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
