@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                                            Intent signInIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                                            //signInIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(signInIntent);
+                                            finish();
 
                                         } else {
 

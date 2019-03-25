@@ -9,13 +9,23 @@
     tools:context=".SignUpActivity">
 
     <EditText
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Full name"
+        android:layout_marginTop = "46dp"/>
+
+
+    <EditText
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:inputType="textEmailAddress"
         android:id = "@+id/edt_signup_email"
         android:ems="10"
         android:hint = "Email"
-        android:layout_marginTop = "46dp" />
+        android:layout_below="@+id/user_name"
+         />
 
 
     <EditText

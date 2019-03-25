@@ -131,6 +131,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onStart();
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = mAuth.getCurrentUser().getUid();
+
+        if(currentUser == null){
+
+            Intent profileIntent = new Intent(ProfileActivity.this, MainActivity.class);
+            startActivity(profileIntent);
+            finish();
+
+        }
+
         databaseChild.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
