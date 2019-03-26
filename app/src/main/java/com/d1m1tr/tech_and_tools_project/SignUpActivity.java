@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -26,7 +27,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
+        edtUserFullName = findViewById(R.id.user_name);
         edtEmail = findViewById(R.id.edt_signup_email);
         edtPassword = findViewById(R.id.edt_signup_password);
-        edtUserFullName = findViewById(R.id.user_name);
         signUp = findViewById(R.id.btn_register);
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void signUpUser(String name, String email, String password){
+    private void signUpUser(final String name, final String email, String password){
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -72,16 +72,30 @@ public class SignUpActivity extends AppCompatActivity {
 
                             if(task.isSuccessful()){
 
-//                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//                                String uid = currentUser.getUid();
-//                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-//
-//                                HashMap<String, String> userMap = new HashMap<>();
+                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                final String uid = currentUser.getUid();
 
-                                Intent signupIntent = new Intent(SignUpActivity.this, MainActivity.class);
-                                startActivity(signupIntent);
-                                finish();
-                                Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
+                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+                                User user = new User(uid, name, email);
+
+                                DatabaseReference databaseReference = firebaseDatabase.getReference().child("users").child(uid);
+                                databaseReference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if(task.isSuccessful()){
+
+                                            Intent signUpIntent = new Intent(SignUpActivity.this, MainActivity.class);
+                                            signUpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(signUpIntent);
+                                            finish();
+
+                                        }
+
+                                    }
+                                });
+
 
                             }
                             else{
