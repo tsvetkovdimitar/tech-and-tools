@@ -6,16 +6,27 @@ public class User {
     private String userName;
     private String userEmail;
 
-    public User(){
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    private String userType;
+
+        public User(){
 
 
     }
 
-    public User(String userId, String userName, String userEmail){
+    public User(String userId, String userName, String userEmail, String userType){
 
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
+        this.userType = userType;
 
     }
 

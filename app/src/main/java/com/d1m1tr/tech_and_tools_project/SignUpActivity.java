@@ -20,6 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private String userType;
+    private final String ADMIN = "tsvetkovdimitar@gmail.com";
+    private final String CARER = "carer";
+    private final String PARENT = "parent";
+
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtUserFullName;
@@ -27,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private DatabaseReference mRootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +81,20 @@ public class SignUpActivity extends AppCompatActivity {
                                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                                 final String uid = currentUser.getUid();
 
+                                if(email.equals(ADMIN)){
+
+                                    userType = CARER;
+
+                                }
+                                else{
+
+                                    userType = PARENT;
+
+                                }
+
                                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-                                User user = new User(uid, name, email);
+                                User user = new User(uid, name, email, userType);
 
                                 DatabaseReference databaseReference = firebaseDatabase.getReference().child("users").child(uid);
                                 databaseReference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -88,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                             Intent signUpIntent = new Intent(SignUpActivity.this, MainActivity.class);
                                             signUpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                                             startActivity(signUpIntent);
                                             finish();
 
