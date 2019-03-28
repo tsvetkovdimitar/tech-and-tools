@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity {
+public class CarerProfileActivity extends AppCompatActivity {
 
     public static final String CHILD_NAME = "childName";
     public static final String CHILD_ID = "childId";
@@ -37,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText childName;
     private EditText parentEmail;
     private Button btnAddChild;
-    private Button btnAddUserDetails;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -51,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_carer_profile);
 
         userEmail = findViewById(R.id.userEmail);
         userLogOut = findViewById(R.id.btn_profile_signout);
@@ -59,8 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         childName = findViewById(R.id.edt_child_name);
         parentEmail = findViewById(R.id.edt_parent_email);
         btnAddChild = findViewById(R.id.btn_add_child);
-
-        btnAddUserDetails = findViewById(R.id.btn_add_user_details);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -78,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                Intent intent = new Intent(CarerProfileActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -135,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(currentUser == null){
 
-            Intent profileIntent = new Intent(ProfileActivity.this, MainActivity.class);
+            Intent profileIntent = new Intent(CarerProfileActivity.this, MainActivity.class);
             startActivity(profileIntent);
             finish();
 
@@ -153,7 +150,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
 
-                ChildList adapter = new ChildList(ProfileActivity.this, childrenList);
+                ChildList adapter = new ChildList(CarerProfileActivity.this, childrenList);
                 listViewChildren.setAdapter(adapter);
 
             }

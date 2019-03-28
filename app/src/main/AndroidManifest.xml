@@ -17,7 +17,7 @@
         <activity android:name=".ParentProfileActivity"></activity>
         <activity android:name=".AddChildActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".CarerProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"

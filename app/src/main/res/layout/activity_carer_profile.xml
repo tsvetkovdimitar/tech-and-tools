@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".CarerProfileActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,34 +47,21 @@
         android:layout_below="@id/edt_parent_email"
         android:text="Add"/>
 
-
-    <EditText
-        android:id="@+id/user_name"
-        android:layout_below="@+id/btn_add_child"
-        android:layout_marginTop = "20dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Full name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
-    <Button
-        android:id="@+id/btn_add_user_details"
-        android:layout_below="@id/user_name"
-        android:layout_marginTop = "20dp"
-        android:text="Add  Details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_children"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btn_add_user_details">
+        android:layout_below="@+id/btn_add_child"
+        android:layout_marginBottom="60dp">
 
     </ListView>
 
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/carer_bottom_nav"
+        />
 
 
 </RelativeLayout>

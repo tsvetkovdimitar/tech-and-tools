@@ -48,8 +48,8 @@ public class AddChildActivity extends AppCompatActivity {
 
         dailyActivities = new ArrayList<>();
 
-        String id = intent.getStringExtra(ProfileActivity.CHILD_ID);
-        String name = intent.getStringExtra(ProfileActivity.CHILD_NAME);
+        String id = intent.getStringExtra(CarerProfileActivity.CHILD_ID);
+        String name = intent.getStringExtra(CarerProfileActivity.CHILD_NAME);
 
         textViewChildName.setText(name);
 

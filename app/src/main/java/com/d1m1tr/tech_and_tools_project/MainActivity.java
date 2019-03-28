@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                                     if(userType.equals(CARER)){
 
 
-                                                        Intent signInCarerIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                                                        Intent signInCarerIntent = new Intent(MainActivity.this, CarerProfileActivity.class);
                                                         signInCarerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                         startActivity(signInCarerIntent);
                                                         finish();
