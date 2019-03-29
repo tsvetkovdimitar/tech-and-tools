@@ -3,10 +3,13 @@ package com.d1m1tr.tech_and_tools_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,6 +50,9 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     private List<Child> childrenList;
 
+    private BottomNavigationItemView carerProfileBottomNavView;
+    private Toolbar carerProfileToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,12 @@ public class CarerProfileActivity extends AppCompatActivity {
         listViewChildren = findViewById(R.id.list_children);
 
         childrenList = new ArrayList<>();
+
+        carerProfileToolbar = findViewById(R.id.carer_profile_toolbar);
+        setSupportActionBar(carerProfileToolbar);
+        getSupportActionBar().setTitle("Nana");
+
+       // carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
 
         userLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,5 +258,13 @@ public class CarerProfileActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.carer_toolbar_menu, menu);
+
+        return true;
     }
 }

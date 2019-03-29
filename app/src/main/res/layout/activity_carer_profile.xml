@@ -8,10 +8,19 @@
     android:layout_height="match_parent"
     tools:context=".CarerProfileActivity">
 
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/carer_profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop = "20dp"
+        android:layout_below="@+id/carer_profile_toolbar"
         android:id="@+id/userEmail"
         android:textSize="25sp"
         android:gravity="center"
@@ -59,8 +68,9 @@
 
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/carer_bottom_nav"
+        android:layout_below="@id/list_children"
         />
 
 
