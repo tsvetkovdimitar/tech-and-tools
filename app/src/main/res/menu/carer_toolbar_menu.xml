@@ -10,7 +10,9 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/btn_account_settings"
-        android:title="Account Settings" />
+        android:icon="@mipmap/home_icon"
+        android:title="Account Settings"
+        app:showAsAction="always" />
     <item
         android:id="@+id/btn_carer_log_out"
         android:title="Log out" />
