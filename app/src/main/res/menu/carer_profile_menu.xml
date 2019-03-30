@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/btn_search_carer"
+        android:title="@string/carer_menu_search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btn_logout_carer"
+        android:title="@string/logout_carer_menu"
+        app:showAsAction="always" />
+</menu>

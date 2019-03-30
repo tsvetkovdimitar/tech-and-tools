@@ -25,20 +25,13 @@
         android:textSize="25sp"
         android:gravity="center"
         android:text="TextView"/>
-    
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_profile_signout"
-        android:layout_below="@id/userEmail"
-        android:text="Sign Out"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Child name"
         android:id="@+id/edt_child_name"
-        android:layout_below="@id/btn_profile_signout"/>
+        android:layout_below="@id/userEmail"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -61,16 +54,19 @@
         android:layout_height="match_parent"
         android:id="@+id/list_children"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btn_add_child"
-        android:layout_marginBottom="60dp">
+        android:layout_below="@+id/btn_add_child">
 
     </ListView>
 
     <android.support.design.widget.BottomNavigationView
+        android:id="@+id/carer_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/carer_bottom_nav"
-        android:layout_below="@id/list_children"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        app:menu="@menu/carer_bottom_menu" />
 
 
 </RelativeLayout>

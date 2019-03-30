@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/btn_bottom_carer_account"
+        android:icon="@mipmap/profile_icon"
+        android:title="@string/bottom_account_carer_text"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btn_carer_bottom_parents"
+        android:icon="@mipmap/parents_icon"
+        android:title="@string/bottom_carer_parents_text"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btn_bottom_carer_home"
+        android:icon="@mipmap/home_icon"
+        android:title="@string/bottom_home_carer_text"
+        app:showAsAction="always" />
+</menu>

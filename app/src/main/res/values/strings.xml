@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">tech-and-tools-project</string>
+    <string name="carer_menu_search">Search</string>
+    <string name="home_carer_menu">Home</string>
+    <string name="logout_carer_menu">Logout</string>
+    <string name="bottom_home_carer_text">Home</string>
+    <string name="bottom_carer_parents_text" >Parents</string>
+    <string name="bottom_account_carer_text">Account</string>
 </resources>

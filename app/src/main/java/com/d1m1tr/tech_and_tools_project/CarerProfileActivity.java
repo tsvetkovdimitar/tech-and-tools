@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -35,7 +36,6 @@ public class CarerProfileActivity extends AppCompatActivity {
     public static final String CHILD_ID = "childId";
 
     private TextView userEmail;
-    private Button userLogOut;
 
     private EditText childName;
     private EditText parentEmail;
@@ -59,7 +59,6 @@ public class CarerProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_carer_profile);
 
         userEmail = findViewById(R.id.userEmail);
-        userLogOut = findViewById(R.id.btn_profile_signout);
 
         childName = findViewById(R.id.edt_child_name);
         parentEmail = findViewById(R.id.edt_parent_email);
@@ -81,19 +80,6 @@ public class CarerProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Nana");
 
         carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
-
-        userLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(CarerProfileActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-
-            }
-        });
 
         btnAddChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,8 +249,34 @@ public class CarerProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.carer_toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.carer_profile_menu, menu);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case R.id.btn_logout_carer:
+                logOut();
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
+
+    public void logOut(){
+
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(CarerProfileActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
     }
 }
