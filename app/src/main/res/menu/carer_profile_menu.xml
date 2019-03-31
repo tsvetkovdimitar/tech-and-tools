@@ -5,10 +5,10 @@
 
     <item
         android:id="@+id/btn_search_carer"
+        android:icon="@mipmap/search_icon"
         android:title="@string/carer_menu_search"
         app:showAsAction="always" />
     <item
         android:id="@+id/btn_logout_carer"
-        android:title="@string/logout_carer_menu"
-        app:showAsAction="always" />
+        android:title="@string/logout_carer_menu" />
 </menu>

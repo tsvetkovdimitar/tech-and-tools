@@ -4,6 +4,13 @@
     <string name="home_carer_menu">Home</string>
     <string name="logout_carer_menu">Logout</string>
     <string name="bottom_home_carer_text">Home</string>
-    <string name="bottom_carer_parents_text" >Parents</string>
+    <string name="bottom_carer_parents_text">Parents</string>
     <string name="bottom_account_carer_text">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all_parents_fragment">All Parents Fragment</string>
+    <string name="carer_home_fragment_text">Home</string>
+    <string name="carer_fragment_account_text">Account</string>
+    <string name="all_parents_fragment_text">All Parents</string>
 </resources>

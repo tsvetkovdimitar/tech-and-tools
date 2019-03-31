@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,8 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -25,6 +25,8 @@ public class SignUpActivity extends AppCompatActivity {
     private final String CARER = "carer";
     private final String PARENT = "parent";
 
+    private ProgressBar progressBar;
+
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtUserFullName;
@@ -32,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private DatabaseReference mRootRef;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_signup_email);
         edtPassword = findViewById(R.id.edt_signup_password);
         signUp = findViewById(R.id.btn_register);
+
+        progressBar = findViewById(R.id.signup_activity_progress_bar);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +82,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                             if(task.isSuccessful()){
 
+                                progressBar.setVisibility(View.VISIBLE);
+
                                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                                 final String uid = currentUser.getUid();
 
@@ -92,27 +98,52 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 }
 
-                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
                                 User user = new User(uid, name, email, userType);
 
-                                DatabaseReference databaseReference = firebaseDatabase.getReference().child("users").child(uid);
-                                databaseReference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                db.collection("users").document(uid).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         if(task.isSuccessful()){
 
+                                            Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
                                             Intent signUpIntent = new Intent(SignUpActivity.this, MainActivity.class);
                                             signUpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                                             startActivity(signUpIntent);
                                             finish();
 
+                                        }else{
+
+                                            Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                                         }
 
                                     }
                                 });
+
+
+
+//                                DatabaseReference databaseReference = firebaseDatabase.getReference().child("users").child(uid);
+//                                databaseReference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//
+//                                        if(task.isSuccessful()){
+//
+//                                            Intent signUpIntent = new Intent(SignUpActivity.this, MainActivity.class);
+//                                            signUpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                            Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
+//                                            startActivity(signUpIntent);
+//                                            finish();
+//
+//                                        }
+//
+//
+//                                    }
+//                                });
 
 
                             }
@@ -123,6 +154,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                             }
 
+
+                            progressBar.setVisibility(View.INVISIBLE);
 
                         }
                     });

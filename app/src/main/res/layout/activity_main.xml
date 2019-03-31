@@ -8,13 +8,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ProgressBar
+        android:id="@+id/main_activity_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
     <EditText
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
+        android:layout_marginTop="40dp"
         android:inputType="textEmailAddress"
         android:id = "@+id/edt_email"
         android:hint = "Email"
-        android:layout_marginTop = "46dp" />
+         />
 
 
     <EditText

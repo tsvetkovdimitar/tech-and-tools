@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ public class CarerProfileActivity extends AppCompatActivity {
     private EditText parentEmail;
     private Button btnAddChild;
 
+    private ProgressBar progressbar;
+
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
@@ -52,6 +57,10 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     private Toolbar carerProfileToolbar;
     private BottomNavigationView carerProfileBottomNavView;
+
+    private AllParentsFragment allParentsFragment;
+    private CarerHomeFragment carerHomeFragment;
+    private CarerAccountFragment carerAccountFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +89,37 @@ public class CarerProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Nana");
 
         carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
+
+        //Fragments
+        allParentsFragment = new AllParentsFragment();
+        carerHomeFragment = new CarerHomeFragment();
+        carerAccountFragment = new CarerAccountFragment();
+
+        carerProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch(menuItem.getItemId()){
+
+                    case R.id.btn_bottom_carer_account:
+                        replaceFragment(carerAccountFragment);
+                        return true;
+
+                    case R.id.btn_carer_bottom_parents:
+                        replaceFragment(allParentsFragment);
+                        return true;
+
+                    case R.id.btn_bottom_carer_home:
+                        replaceFragment(carerHomeFragment);
+                        return true;
+
+                    default:
+                        return false;
+
+                }
+            }
+        });
+
 
         btnAddChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,17 +164,6 @@ public class CarerProfileActivity extends AppCompatActivity {
     protected void onStart(){
 
         super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userId = mAuth.getCurrentUser().getUid();
-
-        if(currentUser == null){
-
-            Intent profileIntent = new Intent(CarerProfileActivity.this, MainActivity.class);
-            startActivity(profileIntent);
-            finish();
-
-        }
 
         databaseChild.addValueEventListener(new ValueEventListener() {
             @Override
@@ -256,6 +285,7 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
 
         switch(item.getItemId()){
 
@@ -277,6 +307,14 @@ public class CarerProfileActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+
+    }
+
+    private void replaceFragment(Fragment fragment){
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.carer_frame_layout, fragment);
+        fragmentTransaction.commit();
 
     }
 }

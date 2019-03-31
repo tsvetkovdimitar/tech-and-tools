@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     private String userType = " ";
-    private String currentUserId = " ";
+    private ProgressBar progressBar;
 
     private final String CARER = "carer";
     private final String PARENT = "parent";
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         logIn = findViewById(R.id.btn_login);
         signUp = findViewById(R.id.btn_signup);
 
+        progressBar = findViewById(R.id.main_activity_progress_bar);
+
         mAuth = FirebaseAuth.getInstance();
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 String loginPassword = password.getText().toString().trim();
 
                 if (!(TextUtils.isEmpty(loginEmail) && TextUtils.isEmpty(loginPassword))){
+
+                    progressBar.setVisibility(View.VISIBLE);
 
                     mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
 
@@ -113,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
                                         }
+
+                                        progressBar.setVisibility(View.VISIBLE);
 
                                     }
                             });
