@@ -21,46 +21,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/carer_profile_toolbar"
-        android:id="@+id/userEmail"
+        android:id="@+id/userName"
         android:textSize="25sp"
         android:gravity="center"
         android:text="TextView"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Child name"
-        android:id="@+id/edt_child_name"
-        android:layout_below="@id/userEmail"/>
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Child name"-->
+        <!--android:id="@+id/edt_child_name"-->
+        <!--android:layout_below="@id/userName"/>-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Parent email"
-        android:ems="10"
-        android:id="@+id/edt_parent_email"
-        android:layout_below="@id/edt_child_name"/>
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:inputType="textEmailAddress"-->
+        <!--android:hint="Parent email"-->
+        <!--android:ems="10"-->
+        <!--android:id="@+id/edt_parent_email"-->
+        <!--android:layout_below="@id/edt_child_name"/>-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_add_child"
-        android:layout_below="@id/edt_parent_email"
-        android:text="Add"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/btn_add_child"-->
+        <!--android:layout_below="@id/edt_parent_email"-->
+        <!--android:text="Add"/>-->
 
     <FrameLayout
         android:id="@+id/carer_frame_layout"
-        android:layout_below="@+id/btn_add_child"
+        android:layout_below="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_children">
-        </ListView>
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/list_children">-->
+        <!--</ListView>-->
 
     </FrameLayout>
 

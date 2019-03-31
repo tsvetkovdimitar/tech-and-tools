@@ -14,21 +14,20 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,20 +37,23 @@ public class CarerProfileActivity extends AppCompatActivity {
     public static final String CHILD_NAME = "childName";
     public static final String CHILD_ID = "childId";
 
-    private TextView userEmail;
+    private TextView userName;
+    private String userId;
 
-    private EditText childName;
-    private EditText parentEmail;
-    private Button btnAddChild;
+
+//    private EditText childName;
+//    private EditText parentEmail;
+//    private Button btnAddChild;
 
     private ProgressBar progressbar;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private FirebaseFirestore firebaseFirestore;
 
-    private DatabaseReference databaseChild;
+//    private DatabaseReference databaseChild;
 
-    private ListView listViewChildren;
+//    private ListView listViewChildren;
 
     private List<Child> childrenList;
 
@@ -67,20 +69,56 @@ public class CarerProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carer_profile);
 
-        userEmail = findViewById(R.id.userEmail);
+//        userEmail = findViewById(R.id.userEmail);
+//
+//        childName = findViewById(R.id.edt_child_name);
+//        parentEmail = findViewById(R.id.edt_parent_email);
 
-        childName = findViewById(R.id.edt_child_name);
-        parentEmail = findViewById(R.id.edt_parent_email);
-        btnAddChild = findViewById(R.id.btn_add_child);
+        userName = findViewById(R.id.userName);
+//        btnAddChild = findViewById(R.id.btn_add_child);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        databaseChild = FirebaseDatabase.getInstance().getReference("child");
+        userId = mAuth.getCurrentUser().getUid();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        userEmail.setText(mUser.getEmail());
+        firebaseFirestore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-        listViewChildren = findViewById(R.id.list_children);
+                if(task.isSuccessful()){
+
+                    if(task.getResult().exists()){
+
+                        Toast.makeText(CarerProfileActivity.this, "Data exists", Toast.LENGTH_LONG).show();
+                        String name = task.getResult().getString("name");
+                        userName.setText(name);
+
+                    }
+                    else{
+
+                        Toast.makeText(CarerProfileActivity.this, "Data does not exists", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+
+                }
+                else {
+
+                    Toast.makeText(CarerProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        });
+
+//        databaseChild = FirebaseDatabase.getInstance().getReference("child");
+
+//        userEmail.setText(mUser.getEmail());
+
+//        listViewChildren = findViewById(R.id.list_children);
 
         childrenList = new ArrayList<>();
 
@@ -121,41 +159,43 @@ public class CarerProfileActivity extends AppCompatActivity {
         });
 
 
-        btnAddChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        btnAddChild.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                addChild();
+//
+//            }
+//        });
 
-                addChild();
+//        listViewChildren.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                Child child = childrenList.get(i);
+//
+//                Intent intent = new Intent(getApplicationContext(), AddChildActivity.class);
+//
+//                intent.putExtra(CHILD_ID, child.getChildId());
+//                intent.putExtra(CHILD_NAME, child.getChildName());
+//
+//                startActivity(intent);
+//
+//            }
+//        });
+//
+//        listViewChildren.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                Child child = childrenList.get(i);
+//
+//                showUpdateDialog(child.getChildId(), child.getChildName());
+//                return true;
+//            }
+//        });
 
-            }
-        });
 
-        listViewChildren.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Child child = childrenList.get(i);
-
-                Intent intent = new Intent(getApplicationContext(), AddChildActivity.class);
-
-                intent.putExtra(CHILD_ID, child.getChildId());
-                intent.putExtra(CHILD_NAME, child.getChildName());
-
-                startActivity(intent);
-
-            }
-        });
-
-        listViewChildren.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Child child = childrenList.get(i);
-
-                showUpdateDialog(child.getChildId(), child.getChildName());
-                return true;
-            }
-        });
 
 
     }
@@ -165,28 +205,28 @@ public class CarerProfileActivity extends AppCompatActivity {
 
         super.onStart();
 
-        databaseChild.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
-
-                    Child child = childSnapshot.getValue(Child.class);
-
-                    childrenList.add(child);
-
-                }
-
-                ChildList adapter = new ChildList(CarerProfileActivity.this, childrenList);
-                listViewChildren.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        databaseChild.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()){
+//
+//                    Child child = childSnapshot.getValue(Child.class);
+//
+//                    childrenList.add(child);
+//
+//                }
+//
+//                ChildList adapter = new ChildList(CarerProfileActivity.this, childrenList);
+//                listViewChildren.setAdapter(adapter);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 
@@ -251,29 +291,29 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     }
 
-    private void addChild(){
-
-        String name = childName.getText().toString().trim();
-        String email = parentEmail.getText().toString().trim();
-
-        if(!(TextUtils.isEmpty(name) && (TextUtils.isEmpty(email)))){
-
-            String id = databaseChild.push().getKey();
-
-            Child child = new Child(id, name, email);
-
-            databaseChild.push().setValue(child);
-
-            Toast.makeText(this, "Child added", Toast.LENGTH_LONG).show();
-
-        }
-        else{
-
-            Toast.makeText(this, "Please, fill up all fields", Toast.LENGTH_LONG).show();
-
-        }
-
-    }
+//    private void addChild(){
+//
+//        String name = childName.getText().toString().trim();
+//        String email = parentEmail.getText().toString().trim();
+//
+//        if(!(TextUtils.isEmpty(name) && (TextUtils.isEmpty(email)))){
+//
+//            String id = databaseChild.push().getKey();
+//
+//            Child child = new Child(id, name, email);
+//
+//            databaseChild.push().setValue(child);
+//
+//            Toast.makeText(this, "Child added", Toast.LENGTH_LONG).show();
+//
+//        }
+//        else{
+//
+//            Toast.makeText(this, "Please, fill up all fields", Toast.LENGTH_LONG).show();
+//
+//        }
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

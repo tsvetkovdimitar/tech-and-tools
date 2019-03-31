@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,22 +17,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private String userType = " ";
     private ProgressBar progressBar;
+    private static final String TAG = "DocSnippets";
 
     private final String CARER = "carer";
     private final String PARENT = "parent";
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
+    private FirebaseFirestore db;
 
     private EditText email;
     private EditText password;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.main_activity_progress_bar);
 
         mAuth = FirebaseAuth.getInstance();
+
+        db = FirebaseFirestore.getInstance();
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,52 +77,98 @@ public class MainActivity extends AppCompatActivity {
 
                                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                                             final String uid = currentUser.getUid();
-                                            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
-                                            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+                                            db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                                                    userType = dataSnapshot.child(uid).child("userType").getValue(String.class);
+                                                    if (task.isSuccessful()) {
 
-                                                    if(userType.equals(CARER)){
+                                                        DocumentSnapshot document = task.getResult();
 
 
-                                                        Intent signInCarerIntent = new Intent(MainActivity.this, CarerProfileActivity.class);
-                                                        signInCarerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                        startActivity(signInCarerIntent);
-                                                        finish();
+                                                        if (document.exists()) {
+
+                                                            userType = document.getString("userType");
+                                                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                                            if(userType.equals(CARER)){
+
+
+                                                            Intent signInCarerIntent = new Intent(MainActivity.this, CarerProfileActivity.class);
+                                                            signInCarerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                            startActivity(signInCarerIntent);
+                                                            finish();
+
+                                                        }
+                                                        else if(userType.equals(PARENT)){
+
+                                                            Intent signInParentIntent = new Intent(MainActivity.this, ParentProfileActivity.class);
+                                                            signInParentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                            startActivity(signInParentIntent);
+                                                            finish();
+
 
                                                     }
-                                                    else if(userType.equals(PARENT)){
 
-                                                        Intent signInParentIntent = new Intent(MainActivity.this, ParentProfileActivity.class);
-                                                        signInParentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                        startActivity(signInParentIntent);
-                                                        finish();
+                                                        } else {
 
+                                                            Log.d(TAG, "No such document");
+                                                        }
 
+                                                    } else {
+
+                                                        Log.d(TAG, "get failed with ", task.getException());
                                                     }
-
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
-
                                                 }
                                             });
+
+//                                            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+//
+//                                            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                                    userType = dataSnapshot.child(uid).child("userType").getValue(String.class);
+//
+//                                                    if(userType.equals(CARER)){
+//
+//
+//                                                        Intent signInCarerIntent = new Intent(MainActivity.this, CarerProfileActivity.class);
+//                                                        signInCarerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                                        startActivity(signInCarerIntent);
+//                                                        finish();
+//
+//                                                    }
+//                                                    else if(userType.equals(PARENT)){
+//
+//                                                        Intent signInParentIntent = new Intent(MainActivity.this, ParentProfileActivity.class);
+//                                                        signInParentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                                        startActivity(signInParentIntent);
+//                                                        finish();
+//
+//
+//                                                    }
+//
+//
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                                    Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+//
+//                                                }
+//                                            });
 
 
                                         } else {
 
                                             Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            progressBar.setVisibility(View.INVISIBLE);
 
                                         }
 
-                                        progressBar.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.INVISIBLE);
 
                                     }
                             });
