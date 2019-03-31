@@ -105,8 +105,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-
-
                                 User user = new User(uid, name, email, userType, time);
 
                                 db.collection("users").document(uid).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
