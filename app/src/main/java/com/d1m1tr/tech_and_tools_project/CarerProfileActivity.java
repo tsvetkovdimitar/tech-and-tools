@@ -36,6 +36,9 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     public static final String CHILD_NAME = "childName";
     public static final String CHILD_ID = "childId";
+    private static final String TAG = "DocSnippets";
+
+    private String name;
 
     private TextView userName;
     private String userId;
@@ -49,7 +52,7 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore db;
 
 //    private DatabaseReference databaseChild;
 
@@ -80,39 +83,61 @@ public class CarerProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        userId = mAuth.getCurrentUser().getUid();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        firebaseFirestore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String uid = mUser.getUid();
+
+        db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                 if(task.isSuccessful()){
 
-                    if(task.getResult().exists()){
+                    DocumentSnapshot document = task.getResult();
 
-                        Toast.makeText(CarerProfileActivity.this, "Data exists", Toast.LENGTH_LONG).show();
-                        String name = task.getResult().getString("name");
+                    if(document.exists()){
+
+                        name = document.getString("userName");
                         userName.setText(name);
-
+                        
                     }
-                    else{
-
-                        Toast.makeText(CarerProfileActivity.this, "Data does not exists", Toast.LENGTH_LONG).show();
-
-                    }
-
-
-
-                }
-                else {
-
-                    Toast.makeText(CarerProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
                 }
 
             }
         });
+
+//        firebaseFirestore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//
+//                if(task.isSuccessful()){
+//
+//                    if(task.getResult().exists()){
+//
+//                        Toast.makeText(CarerProfileActivity.this, "Data exists", Toast.LENGTH_LONG).show();
+//                        String name = task.getResult().getString("name");
+//                        userName.setText(name);
+//
+//                    }
+//                    else{
+//
+//                        Toast.makeText(CarerProfileActivity.this, "Data does not exists", Toast.LENGTH_LONG).show();
+//
+//                    }
+//
+//
+//
+//                }
+//                else {
+//
+//                    Toast.makeText(CarerProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//            }
+//        });
 
 //        databaseChild = FirebaseDatabase.getInstance().getReference("child");
 

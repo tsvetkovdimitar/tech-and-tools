@@ -23,7 +23,6 @@
         android:layout_below="@+id/carer_profile_toolbar"
         android:id="@+id/userName"
         android:textSize="25sp"
-        android:gravity="center"
         android:text="TextView"/>
 
     <!--<EditText-->

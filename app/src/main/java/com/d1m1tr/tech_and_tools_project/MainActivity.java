@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private final String CARER = "carer";
     private final String PARENT = "parent";
 
+    private String userID;
+
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
     private FirebaseFirestore db;
