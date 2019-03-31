@@ -17,9 +17,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private @ServerTimestamp
+    Date time;
     private String userType;
     private final String ADMIN = "tsvetkovdimitar@gmail.com";
     private final String CARER = "carer";
@@ -100,7 +105,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-                                User user = new User(uid, name, email, userType);
+
+
+                                User user = new User(uid, name, email, userType, time);
 
                                 db.collection("users").document(uid).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

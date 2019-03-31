@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,10 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private final String CARER = "carer";
     private final String PARENT = "parent";
 
-    private String userID;
-
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseReference;
     private FirebaseFirestore db;
 
     private EditText email;
@@ -124,43 +120,6 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                             });
 
-//                                            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-//
-//                                            mDatabaseReference.addValueEventListener(new ValueEventListener() {
-//                                                @Override
-//                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                                                    userType = dataSnapshot.child(uid).child("userType").getValue(String.class);
-//
-//                                                    if(userType.equals(CARER)){
-//
-//
-//                                                        Intent signInCarerIntent = new Intent(MainActivity.this, CarerProfileActivity.class);
-//                                                        signInCarerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                                        startActivity(signInCarerIntent);
-//                                                        finish();
-//
-//                                                    }
-//                                                    else if(userType.equals(PARENT)){
-//
-//                                                        Intent signInParentIntent = new Intent(MainActivity.this, ParentProfileActivity.class);
-//                                                        signInParentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                                        startActivity(signInParentIntent);
-//                                                        finish();
-//
-//
-//                                                    }
-//
-//
-//                                                }
-//
-//                                                @Override
-//                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                                    Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
-//
-//                                                }
-//                                            });
 
 
                                         } else {

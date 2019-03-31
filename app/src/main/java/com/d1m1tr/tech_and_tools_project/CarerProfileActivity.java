@@ -100,7 +100,7 @@ public class CarerProfileActivity extends AppCompatActivity {
 
                         name = document.getString("userName");
                         userName.setText(name);
-                        
+
                     }
 
                 }

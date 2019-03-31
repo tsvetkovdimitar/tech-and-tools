@@ -1,10 +1,34 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
+@IgnoreExtraProperties
 public class User {
 
     private String userId;
     private String userName;
     private String userEmail;
+    private @ServerTimestamp
+    Date timestamp;
+
+
+    public User(String userId, String userName, String userEmail, String userType, Date timestamp){
+
+        this.userId = userId;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userType = userType;
+        this.timestamp = timestamp;
+
+    }
+
+    public User(){
+
+
+    }
 
     public String getUserType() {
         return userType;
@@ -16,18 +40,20 @@ public class User {
 
     private String userType;
 
-        public User(){
-
-
+    public String getUserId() {
+        return userId;
     }
 
-    public User(String userId, String userName, String userEmail, String userType){
-
+    public void setUserId(String userId) {
         this.userId = userId;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.userType = userType;
+    }
 
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getUserName() {
@@ -44,13 +70,6 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public User(String userName, String userEmail){
-
-        this.userName = userName;
-        this.userEmail = userEmail;
-
     }
 
 
