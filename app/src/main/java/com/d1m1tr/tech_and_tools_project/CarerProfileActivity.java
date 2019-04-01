@@ -18,14 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -298,7 +295,7 @@ public class CarerProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                updateChild(childId, name, email);
+//                updateChild(childId, name, email);
 
                 alertDialog.dismiss();
 
@@ -307,19 +304,19 @@ public class CarerProfileActivity extends AppCompatActivity {
 
     }
 
-    private boolean updateChild(String childId, String childName, String parentEmail){
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("child").child(childId);
-
-        Child child = new Child(childId, childName, parentEmail);
-
-        databaseReference.setValue(child);
-
-        Toast.makeText(this, "Child information updated successfully", Toast.LENGTH_LONG).show();
-
-        return true;
-
-    }
+//    private boolean updateChild(String childId, String childName, String parentEmail){
+//
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("child").child(childId);
+//
+//        Child child = new Child(childId, childName, childAge, parentEmail);
+//
+//        databaseReference.setValue(child);
+//
+//        Toast.makeText(this, "Child information updated successfully", Toast.LENGTH_LONG).show();
+//
+//        return true;
+//
+//    }
 
 //    private void addChild(){
 //

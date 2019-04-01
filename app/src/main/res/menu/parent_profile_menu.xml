@@ -11,5 +11,8 @@
     <item
         android:id="@+id/btn_logout_parent"
         android:title="@string/parent_logout_menu" />
+    <item
+        android:id="@+id/btn_parent_add_children"
+        android:title="@string/parent_add_children_btn_text" />
 
 </menu>

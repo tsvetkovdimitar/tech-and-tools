@@ -7,6 +7,7 @@ public class Child {
 
     String childId;
     String childName;
+    String childAge;
     String parentEmail;
 
     public Child(){
@@ -15,10 +16,11 @@ public class Child {
 
     }
 
-    public Child(String childId, String childName, String parentEmail){
+    public Child(String childId, String childName, String childAge, String parentEmail){
 
         this.childId = childId;
         this.childName = childName;
+        this.childAge = childAge;
         this.parentEmail = parentEmail;
 
     }
@@ -45,5 +47,13 @@ public class Child {
 
     public void setParentEmail(String parentEmail) {
         this.parentEmail = parentEmail;
+    }
+
+    public String getChildAge() {
+        return childAge;
+    }
+
+    public void setChildAge(String childAge) {
+        this.childAge = childAge;
     }
 }

@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/parent_profile_toolbar"
-        android:id="@+id/userName"
+        android:id="@+id/parentName"
         android:textSize="25sp"
         android:text="TextView"/>
 

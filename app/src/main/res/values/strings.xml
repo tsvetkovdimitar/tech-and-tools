@@ -21,4 +21,5 @@
     <string name="bottom_parents_children_text">Children</string>
     <string name="carer_profile_greeting_text">Hello</string>
     <string name="users_date_registered_text">Date registered :</string>
+    <string name="parent_add_children_btn_text">Add a child</string>
 </resources>

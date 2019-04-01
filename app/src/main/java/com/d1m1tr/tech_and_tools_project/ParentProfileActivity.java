@@ -2,16 +2,31 @@ package com.d1m1tr.tech_and_tools_project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ParentProfileActivity extends AppCompatActivity {
 
+    private String name;
+
+    private TextView userName;
+
     private Toolbar parentToolBar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +37,38 @@ public class ParentProfileActivity extends AppCompatActivity {
         setSupportActionBar(parentToolBar);
 
         getSupportActionBar().setTitle("NANA Parent Profile");
+
+        userName = findViewById(R.id.parentName);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        db = FirebaseFirestore.getInstance();
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String uid = mUser.getUid();
+
+        db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if(task.isSuccessful()){
+
+                    DocumentSnapshot document = task.getResult();
+
+                    if(document.exists()){
+
+                        name = document.getString("userName");
+                        String greeting = getString(R.string.carer_profile_greeting_text);
+                        greeting += " " + name;
+                        userName.setText(greeting);
+
+                    }
+
+                }
+
+            }
+        });
 
     }
 
@@ -37,10 +84,15 @@ public class ParentProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.btn_logout_parent:
                 logOut();
+                return true;
+
+            case R.id.btn_parent_add_children:
+                AddChildDialog addChildDialog = new AddChildDialog();
+                addChildDialog.show(getSupportFragmentManager(), "Add Child Dialog");
                 return true;
 
             default:
