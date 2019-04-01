@@ -149,7 +149,7 @@ public class CarerProfileActivity extends AppCompatActivity {
 
         carerProfileToolbar = findViewById(R.id.carer_profile_toolbar);
         setSupportActionBar(carerProfileToolbar);
-        getSupportActionBar().setTitle("Nana");
+        getSupportActionBar().setTitle("Nana Carer Profile");
 
         carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
 

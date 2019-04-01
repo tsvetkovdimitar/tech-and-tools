@@ -8,10 +8,70 @@
     android:layout_height="match_parent"
     tools:context=".ParentProfileActivity">
 
-    <TextView
-        android:id="@+id/parent_profile_name"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/parent_profile_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello parent"/>
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/parent_profile_toolbar"
+        android:id="@+id/userName"
+        android:textSize="25sp"
+        android:text="TextView"/>
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:hint="Child name"-->
+    <!--android:id="@+id/edt_child_name"-->
+    <!--android:layout_below="@id/userName"/>-->
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:inputType="textEmailAddress"-->
+    <!--android:hint="Parent email"-->
+    <!--android:ems="10"-->
+    <!--android:id="@+id/edt_parent_email"-->
+    <!--android:layout_below="@id/edt_child_name"/>-->
+
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/btn_add_child"-->
+    <!--android:layout_below="@id/edt_parent_email"-->
+    <!--android:text="Add"/>-->
+
+    <FrameLayout
+        android:id="@+id/parent_frame_layout"
+        android:layout_below="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="56dp">
+
+        <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/list_children">-->
+        <!--</ListView>-->
+
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/parent_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        app:menu="@menu/parent_bottom_menu" />
+
+
 
 </RelativeLayout>

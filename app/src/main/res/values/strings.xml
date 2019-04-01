@@ -13,4 +13,10 @@
     <string name="carer_home_fragment_text">Home</string>
     <string name="carer_fragment_account_text">Account</string>
     <string name="all_parents_fragment_text">All Parents</string>
+    <string name="bottom_account_parent_text">Account</string>
+    <string name="bottom_home_parent">Home</string>
+    <string name="bottom_parents_home_text">Home</string>
+    <string name="parent_menu_search">Search</string>
+    <string name="parent_logout_menu">Logout</string>
+    <string name="bottom_parents_children_text">Children</string>
 </resources>
