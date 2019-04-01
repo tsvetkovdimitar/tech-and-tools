@@ -55,18 +55,20 @@ public class AllParentsFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                for(DocumentChange doc: queryDocumentSnapshots.getDocumentChanges()){
+                if(queryDocumentSnapshots != null){
 
-                    if(doc.getType() == DocumentChange.Type.ADDED){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-                        User user = doc.getDocument().toObject(User.class);
-                        usersList.add(user);
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                        parentsRecyclerAdapter.notifyDataSetChanged();
+                            User user = doc.getDocument().toObject(User.class);
+                            usersList.add(user);
+
+                            parentsRecyclerAdapter.notifyDataSetChanged();
+                        }
+
                     }
-
                 }
-
             }
         });
 

@@ -158,6 +158,8 @@ public class CarerProfileActivity extends AppCompatActivity {
         carerHomeFragment = new CarerHomeFragment();
         carerAccountFragment = new CarerAccountFragment();
 
+        replaceFragment(allParentsFragment);
+
         carerProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
