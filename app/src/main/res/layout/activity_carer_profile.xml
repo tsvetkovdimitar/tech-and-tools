@@ -18,12 +18,13 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/carer_profile_toolbar"
-        android:id="@+id/userName"
-        android:textSize="25sp"
-        android:text="TextView"/>
+        android:layout_marginLeft="40dp"
+        android:text="@string/carer_profile_greeting_text"
+        android:textSize="25sp" />
 
     <!--<EditText-->
         <!--android:layout_width="match_parent"-->

@@ -99,7 +99,9 @@ public class CarerProfileActivity extends AppCompatActivity {
                     if(document.exists()){
 
                         name = document.getString("userName");
-                        userName.setText(name);
+                        String greeting = getString(R.string.carer_profile_greeting_text);
+                        greeting += " " + name;
+                        userName.setText(greeting);
 
                     }
 
@@ -166,13 +168,14 @@ public class CarerProfileActivity extends AppCompatActivity {
 
                 switch(menuItem.getItemId()){
 
+                    case R.id.btn_carer_bottom_parents:
+                        replaceFragment(allParentsFragment);
+                        return true;
+
                     case R.id.btn_bottom_carer_account:
                         replaceFragment(carerAccountFragment);
                         return true;
 
-                    case R.id.btn_carer_bottom_parents:
-                        replaceFragment(allParentsFragment);
-                        return true;
 
                     case R.id.btn_bottom_carer_home:
                         replaceFragment(carerHomeFragment);

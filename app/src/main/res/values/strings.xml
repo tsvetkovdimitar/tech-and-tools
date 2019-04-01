@@ -19,4 +19,6 @@
     <string name="parent_menu_search">Search</string>
     <string name="parent_logout_menu">Logout</string>
     <string name="bottom_parents_children_text">Children</string>
+    <string name="carer_profile_greeting_text">Hello</string>
+    <string name="users_date_registered_text">Date registered :</string>
 </resources>

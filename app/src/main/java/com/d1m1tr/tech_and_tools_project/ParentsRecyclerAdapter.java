@@ -2,11 +2,13 @@ package com.d1m1tr.tech_and_tools_project;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecyclerAdapter.ViewHolder> {
@@ -35,6 +37,15 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
 
         viewHolder.setParentName(userName);
 
+        String userEmail = usersList.get(i).getUserEmail();
+
+        viewHolder.setParentEmail(userEmail);
+
+        long milliseconds = usersList.get(i).getTimestamp().getTime();
+        String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
+
+        viewHolder.setRegisteredTimestamp(dateString);
+
     }
 
     @Override
@@ -49,6 +60,10 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
 
         private TextView userName;
 
+        private TextView userEmail;
+
+        private TextView userRegisteredTimestamp;
+
         public ViewHolder(@NonNull View itemView) {
 
             super(itemView);
@@ -61,6 +76,19 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
             userName = view.findViewById(R.id.all_parents_layout_item_name);
             userName.setText(parentNameText);
 
+        }
+
+        public void setParentEmail(String parentEmailText){
+
+            userEmail = view.findViewById(R.id.all_parents_layout_item_email);
+            userEmail.setText(parentEmailText);
+
+        }
+
+        public void setRegisteredTimestamp(String userRegisteredTimeStampText){
+
+            userRegisteredTimestamp = view.findViewById(R.id.user_registration_timestamp);
+            userRegisteredTimestamp.setText(userRegisteredTimeStampText);
         }
 
     }
