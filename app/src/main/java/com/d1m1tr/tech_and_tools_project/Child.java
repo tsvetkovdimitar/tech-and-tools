@@ -8,10 +8,12 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class Child {
 
+
     private String childName;
     private String childAge;
     private @ServerTimestamp
     Date dateRegistered;
+    private String parentId;
 
 
     public Child(){
@@ -20,11 +22,12 @@ public class Child {
 
     }
 
-    public Child(String childName, String childAge, Date dateRegistered){
+    public Child(String childName, String childAge, Date dateRegistered, String parentId){
 
         this.childName = childName;
         this.childAge = childAge;
         this.dateRegistered = dateRegistered;
+        this.parentId = parentId;
 
     }
 
@@ -50,5 +53,13 @@ public class Child {
 
     public void setChildAge(String childAge) {
         this.childAge = childAge;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

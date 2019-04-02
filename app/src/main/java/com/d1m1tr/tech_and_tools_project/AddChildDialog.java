@@ -34,6 +34,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
     private String age;
     private @ServerTimestamp
     Date dateRegistered;
+    private String userId;
 
 
     private FirebaseAuth mAuth;
@@ -91,6 +92,8 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        userId = mUser.getUid();
+
 
     }
 
@@ -115,7 +118,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
 
     public void addNewChild(){
 
-        Child child = new Child(name, age, dateRegistered);
+        Child child = new Child(name, age, dateRegistered, userId);
         final String uid = mUser.getUid();
         userRef.document(uid).collection("children").add(child).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
