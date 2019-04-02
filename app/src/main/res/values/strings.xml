@@ -24,4 +24,6 @@
     <string name="parent_add_children_btn_text">Add a child</string>
     <string name="parent_account_fragment_text">Account</string>
     <string name="parent_fragment_home_text">Home</string>
+    <string name="parent_child_date_registered_text">Date Registered:</string>
+    <string name="parent_child_age_text">Age :</string>
 </resources>
