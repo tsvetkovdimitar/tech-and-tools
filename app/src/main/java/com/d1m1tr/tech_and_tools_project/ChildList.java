@@ -38,7 +38,7 @@ public class ChildList extends ArrayAdapter<Child> {
         Child child = childList.get(position);
 
         textViewName.setText(child.getChildName());
-        textViewEmail.setText(child.getParentEmail());
+      //  textViewEmail.setText(child.getParentEmail());
 
         return listViewItem;
     }

@@ -1,14 +1,18 @@
 package com.d1m1tr.tech_and_tools_project;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
 
 @IgnoreExtraProperties
 public class Child {
 
-    String childId;
-    String childName;
-    String childAge;
-    String parentEmail;
+    private String childName;
+    private String childAge;
+    private @ServerTimestamp
+    Date dateRegistered;
+
 
     public Child(){
 
@@ -16,21 +20,20 @@ public class Child {
 
     }
 
-    public Child(String childId, String childName, String childAge, String parentEmail){
+    public Child(String childName, String childAge, Date dateRegistered){
 
-        this.childId = childId;
         this.childName = childName;
         this.childAge = childAge;
-        this.parentEmail = parentEmail;
+        this.dateRegistered = dateRegistered;
 
     }
 
-    public String getChildId() {
-        return childId;
+    public Date getDateRegistered() {
+        return dateRegistered;
     }
 
-    public void setChildId(String childId) {
-        this.childId = childId;
+    public void setDateRegistered(Date dateRegistered) {
+        this.dateRegistered = dateRegistered;
     }
 
     public String getChildName() {
@@ -39,14 +42,6 @@ public class Child {
 
     public void setChildName(String childName) {
         this.childName = childName;
-    }
-
-    public String getParentEmail() {
-        return parentEmail;
-    }
-
-    public void setParentEmail(String parentEmail) {
-        this.parentEmail = parentEmail;
     }
 
     public String getChildAge() {
