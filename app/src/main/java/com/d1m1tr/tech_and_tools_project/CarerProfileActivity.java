@@ -150,40 +150,46 @@ public class CarerProfileActivity extends AppCompatActivity {
         setSupportActionBar(carerProfileToolbar);
         getSupportActionBar().setTitle("Nana Carer Profile");
 
-        carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
-
-        //Fragments
-        allParentsFragment = new AllParentsFragment();
-        carerHomeFragment = new CarerHomeFragment();
-        carerAccountFragment = new CarerAccountFragment();
-
-        replaceFragment(allParentsFragment);
-
-        carerProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch(menuItem.getItemId()){
-
-                    case R.id.btn_carer_bottom_parents:
-                        replaceFragment(allParentsFragment);
-                        return true;
-
-                    case R.id.btn_bottom_carer_account:
-                        replaceFragment(carerAccountFragment);
-                        return true;
+        if(mAuth.getCurrentUser() != null){
 
 
-                    case R.id.btn_bottom_carer_home:
-                        replaceFragment(carerHomeFragment);
-                        return true;
+            carerProfileBottomNavView = findViewById(R.id.carer_bottom_nav);
 
-                    default:
-                        return false;
+            //Fragments
+            allParentsFragment = new AllParentsFragment();
+            carerHomeFragment = new CarerHomeFragment();
+            carerAccountFragment = new CarerAccountFragment();
 
+            replaceFragment(allParentsFragment);
+
+            carerProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                    switch(menuItem.getItemId()){
+
+                        case R.id.btn_carer_bottom_parents:
+                            replaceFragment(allParentsFragment);
+                            return true;
+
+                        case R.id.btn_bottom_carer_account:
+                            replaceFragment(carerAccountFragment);
+                            return true;
+
+
+                        case R.id.btn_bottom_carer_home:
+                            replaceFragment(carerHomeFragment);
+                            return true;
+
+                        default:
+                            return false;
+
+                    }
                 }
-            }
-        });
+            });
+
+        }
+
 
 
 //        btnAddChild.setOnClickListener(new View.OnClickListener() {

@@ -61,30 +61,37 @@ public class ParentChildrenFragment extends Fragment {
         childrenRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         childrenRecyclerView.setAdapter(parentChildrenRecyclerAdapter);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        childrenRef = firebaseFirestore.collection("users");
+        if(mUser != null){
 
-        childrenRef.document(uid).collection("children").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                if(queryDocumentSnapshots != null){
 
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+            firebaseFirestore = FirebaseFirestore.getInstance();
+            childrenRef = firebaseFirestore.collection("users");
 
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
+            childrenRef.document(uid).collection("children").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                            Child child = doc.getDocument().toObject(Child.class);
-                            childrenList.add(child);
+                    if(queryDocumentSnapshots != null){
 
-                            parentChildrenRecyclerAdapter.notifyDataSetChanged();
+                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                Child child = doc.getDocument().toObject(Child.class);
+                                childrenList.add(child);
+
+                                parentChildrenRecyclerAdapter.notifyDataSetChanged();
+                            }
+
                         }
-
                     }
-                }
 
-            }
-        });
+                }
+            });
+
+        }
+
 
 
 //        firebaseFirestore.collection("users").document(uid).collection("children").addSnapshotListener(new EventListener<QuerySnapshot>() {

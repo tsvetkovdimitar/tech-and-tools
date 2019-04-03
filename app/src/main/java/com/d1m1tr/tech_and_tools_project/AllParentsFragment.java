@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -33,6 +36,9 @@ public class AllParentsFragment extends Fragment {
 
    private ParentsRecyclerAdapter parentsRecyclerAdapter;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     public AllParentsFragment() {
         // Required empty public constructor
     }
@@ -50,27 +56,38 @@ public class AllParentsFragment extends Fragment {
         allParentsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         allParentsRecyclerView.setAdapter(parentsRecyclerAdapter);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
-                if(queryDocumentSnapshots != null){
+        if(mUser != null){
 
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+            firebaseFirestore = FirebaseFirestore.getInstance();
 
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
+            Query allParentsInDescendingOredrQuery = firebaseFirestore.collection("users").orderBy("timestamp", Query.Direction.DESCENDING);
 
-                            User user = doc.getDocument().toObject(User.class);
-                            usersList.add(user);
+           allParentsInDescendingOredrQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                            parentsRecyclerAdapter.notifyDataSetChanged();
+                    if(queryDocumentSnapshots != null){
+
+                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                User user = doc.getDocument().toObject(User.class);
+                                usersList.add(user);
+
+                                parentsRecyclerAdapter.notifyDataSetChanged();
+                            }
+
                         }
-
                     }
                 }
-            }
-        });
+            });
+
+        }
+
 
 
         return usersView;

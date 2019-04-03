@@ -2,11 +2,13 @@ package com.d1m1tr.tech_and_tools_project;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentChildrenRecyclerAdapter.ViewHolder> {
@@ -35,6 +37,14 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
         String childName = childrenList.get(i).getChildName();
         viewHolder.setChildName(childName);
 
+        String childAge = childrenList.get(i).getChildAge();
+        viewHolder.setChildAge(childAge);
+
+        long milliseconds = childrenList.get(i).getDateRegistered().getTime();
+        String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
+
+        viewHolder.setChildDateRegistered(dateString);
+
     }
 
     @Override
@@ -46,10 +56,15 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private View view;
+
         private TextView childName;
+        private TextView childAge;
+        private TextView childDateRegistered;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+
 
             view = itemView;
         }
@@ -59,6 +74,20 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
             childName = view.findViewById(R.id.parents_children_child_name);
             childName.setText(childNameText);
 
+        }
+
+        public void setChildAge(String childAgeText){
+
+            childAge = view.findViewById(R.id.parents_child_age);
+            childAge.setText(childAgeText);
+
+
+        }
+
+        public void setChildDateRegistered(String childDateRegisteredText){
+
+            childDateRegistered = view.findViewById(R.id.parent_child_date_registered);
+            childDateRegistered.setText(childDateRegisteredText);
         }
     }
 }

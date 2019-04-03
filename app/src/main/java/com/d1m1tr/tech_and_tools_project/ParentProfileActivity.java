@@ -79,39 +79,45 @@ public class ParentProfileActivity extends AppCompatActivity {
             }
         });
 
-        parentProfileBottomNavView = findViewById(R.id.parent_bottom_nav);
-
-        parentAccountFragment = new ParentAccountFragment();
-        parentHomeFragment = new ParentHomeFragment();
-        parentChildrenFragment = new ParentChildrenFragment();
-
-        replaceFragment(parentChildrenFragment);
-
-        parentProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch(menuItem.getItemId()){
-
-                    case R.id.btn_parent_bottom_children:
-                        replaceFragment(parentChildrenFragment);
-                        return true;
-
-                    case R.id.btn_bottom_parent_home:
-                        replaceFragment(parentHomeFragment);
-                        return true;
+        if(mAuth.getCurrentUser() != null){
 
 
-                    case R.id.btn_bottom_parent_account:
-                        replaceFragment(parentAccountFragment);
-                        return true;
+            parentProfileBottomNavView = findViewById(R.id.parent_bottom_nav);
 
-                    default:
-                        return false;
+            parentAccountFragment = new ParentAccountFragment();
+            parentHomeFragment = new ParentHomeFragment();
+            parentChildrenFragment = new ParentChildrenFragment();
 
+            replaceFragment(parentChildrenFragment);
+
+            parentProfileBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                    switch(menuItem.getItemId()){
+
+                        case R.id.btn_parent_bottom_children:
+                            replaceFragment(parentChildrenFragment);
+                            return true;
+
+                        case R.id.btn_bottom_parent_home:
+                            replaceFragment(parentHomeFragment);
+                            return true;
+
+
+                        case R.id.btn_bottom_parent_account:
+                            replaceFragment(parentAccountFragment);
+                            return true;
+
+                        default:
+                            return false;
+
+                    }
                 }
-            }
-        });
+            });
+
+        }
+
 
     }
 
