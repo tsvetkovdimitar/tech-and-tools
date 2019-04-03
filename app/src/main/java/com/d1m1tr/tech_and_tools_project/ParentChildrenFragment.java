@@ -64,7 +64,6 @@ public class ParentChildrenFragment extends Fragment {
         if(mUser != null){
 
 
-
             firebaseFirestore = FirebaseFirestore.getInstance();
             childrenRef = firebaseFirestore.collection("users");
 
