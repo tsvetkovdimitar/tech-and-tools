@@ -26,4 +26,6 @@
     <string name="parent_fragment_home_text">Home</string>
     <string name="parent_child_date_registered_text">Date Registered:</string>
     <string name="parent_child_age_text">Age :</string>
+    <string name="carer_children_list_child_age_text">Age :</string>
+    <string name="carer_children_list_child_registered_text">Date registered :</string>
 </resources>

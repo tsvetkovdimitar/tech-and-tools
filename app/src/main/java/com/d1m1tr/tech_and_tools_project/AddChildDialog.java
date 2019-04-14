@@ -1,5 +1,6 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
     Date dateRegistered;
     private String userId;
 
+    private Context context;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;

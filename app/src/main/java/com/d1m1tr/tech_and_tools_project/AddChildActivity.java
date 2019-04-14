@@ -83,9 +83,6 @@ public class AddChildActivity extends AppCompatActivity {
 
                 }
 
-                ChildActivityList childActivityListAdapter = new ChildActivityList(AddChildActivity.this, dailyActivities);
-                listViewActivities.setAdapter(childActivityListAdapter);
-
             }
 
             @Override

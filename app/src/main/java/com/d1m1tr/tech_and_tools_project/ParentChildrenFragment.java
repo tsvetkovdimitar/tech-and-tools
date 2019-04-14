@@ -63,7 +63,6 @@ public class ParentChildrenFragment extends Fragment {
 
         if(mUser != null){
 
-
             firebaseFirestore = FirebaseFirestore.getInstance();
             childrenRef = firebaseFirestore.collection("users");
 
@@ -91,30 +90,6 @@ public class ParentChildrenFragment extends Fragment {
 
         }
 
-
-
-//        firebaseFirestore.collection("users").document(uid).collection("children").addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//
-//                if(queryDocumentSnapshots != null){
-//
-//                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-//
-//                        if (doc.getType() == DocumentChange.Type.ADDED) {
-//
-//                            Child child = doc.getDocument().toObject(Child.class);
-//                            childrenList.add(child);
-//
-//                            parentChildrenRecyclerAdapter.notifyDataSetChanged();
-//                        }
-//
-//                    }
-//                }
-//            }
-//        });
-
-        // Inflate the layout for this fragment
         return childrenView;
     }
 

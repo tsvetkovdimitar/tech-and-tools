@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/parents_list_parent_layout">
-
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/all_parents_layout_item_name"
+        android:id="@+id/children_list_child_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -17,29 +16,34 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/all_parents_layout_item_email"
+        android:id="@+id/children_list_age_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/all_parents_layout_item_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
-
-    <TextView
-        android:id="@+id/timestamp_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/all_parents_layout_item_email"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="@string/users_date_registered_text" />
+        android:text="@string/carer_children_list_child_age_text" />
 
     <TextView
-        android:id="@+id/user_registration_timestamp"
+        android:id="@+id/children_list_child_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timestamp_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/children_list_child_registered_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/carer_children_list_child_registered_text" />
+
+    <TextView
+        android:id="@+id/children_list_child_registered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -6,7 +6,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 @IgnoreExtraProperties
-public class User {
+public class User{
 
     private String userId;
     private String userName;

@@ -1,5 +1,6 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -13,11 +14,15 @@ import java.util.List;
 
 public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecyclerAdapter.ViewHolder> {
 
-    private List<User> usersList;
+    private Clicklistener clicklistener;
 
-    public ParentsRecyclerAdapter(List<User> usersList){
+    private List<User> usersList;
+    private Context context;
+
+    public ParentsRecyclerAdapter(Context context, List<User> usersList){
 
         this.usersList = usersList;
+        this.context = context;
 
     }
 
@@ -46,7 +51,16 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
 
         viewHolder.setRegisteredTimestamp(dateString);
 
+
+
     }
+
+    public void setClickListener(Clicklistener clickListener){
+
+        this.clicklistener = clickListener;
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -54,7 +68,7 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
         return usersList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private View view;
 
@@ -69,6 +83,10 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
             super(itemView);
 
             view = itemView;
+
+            view.setOnClickListener(this);
+
+            userName = view.findViewById(R.id.all_parents_layout_item_name);
         }
 
         public void setParentName(String parentNameText){
@@ -90,6 +108,22 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
             userRegisteredTimestamp = view.findViewById(R.id.user_registration_timestamp);
             userRegisteredTimestamp.setText(userRegisteredTimeStampText);
         }
+
+        @Override
+        public void onClick(View view) {
+
+            if(clicklistener != null){
+
+                clicklistener.itemClicked(view, getAdapterPosition());
+
+            }
+
+        }
+    }
+
+    public interface Clicklistener{
+
+        public void itemClicked(View view, int position);
 
     }
 

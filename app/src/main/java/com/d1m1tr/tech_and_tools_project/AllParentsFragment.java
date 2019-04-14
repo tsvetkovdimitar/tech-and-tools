@@ -1,6 +1,7 @@
 package com.d1m1tr.tech_and_tools_project;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,9 @@ import javax.annotation.Nullable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllParentsFragment extends Fragment {
+public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapter.Clicklistener {
+
+    Boolean firstPageFirstLoad = true;
 
    private View usersView;
    private RecyclerView allParentsRecyclerView;
@@ -54,8 +57,12 @@ public class AllParentsFragment extends Fragment {
         usersList = new ArrayList<>();
         allParentsRecyclerView = usersView.findViewById(R.id.all_parents_list_view);
 
-        parentsRecyclerAdapter = new ParentsRecyclerAdapter(usersList);
+        parentsRecyclerAdapter = new ParentsRecyclerAdapter(getContext(), usersList);
+
+
         allParentsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        parentsRecyclerAdapter.setClickListener(this);
         allParentsRecyclerView.setAdapter(parentsRecyclerAdapter);
 
         mAuth = FirebaseAuth.getInstance();
@@ -90,19 +97,37 @@ public class AllParentsFragment extends Fragment {
 
                     if(queryDocumentSnapshots != null){
 
-                        lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() -1);
+                        if(firstPageFirstLoad){
+
+                            lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() -1);
+
+                        }
 
                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                 User user = doc.getDocument().toObject(User.class);
-                                usersList.add(user);
+
+                                if(firstPageFirstLoad){
+
+
+                                    usersList.add(user);
+
+                                }
+                                else{
+
+                                    usersList.add(0, user);
+
+                                }
+
 
                                 parentsRecyclerAdapter.notifyDataSetChanged();
                             }
 
                         }
+
+                        firstPageFirstLoad = false;
                     }
                 }
             });
@@ -147,4 +172,18 @@ public class AllParentsFragment extends Fragment {
 
     }
 
+    @Override
+    public void itemClicked(View view, int position) {
+
+       // firebaseFirestore.collection("users").document("31eL47ZR9ngHblfWH9OOetZHEXI2").collection("children");
+
+       // childrenListIntent.putExtra("userId", "31eL47ZR9ngHblfWH9OOetZHEXI2");
+        String userId = "31eL47ZR9ngHblfWH9OOetZHEXI2";
+       // User user = new User();
+        Intent childrenListIntent = new Intent(getActivity(), CarerChildrenList.class);
+
+        childrenListIntent.putExtra("userId", userId);
+        startActivity(childrenListIntent);
+
+    }
 }
