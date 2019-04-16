@@ -6,40 +6,50 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRecyclerViewHolder> {
+public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRecyclerViewAdapter.ViewHolder>{
 
-    CarerChildrenList carerChildrenList;
-    ArrayList<Child> childrenList;
+    private OnItemClickListener clicklistener;
 
-    public ChildrenRecyclerViewAdapter(CarerChildrenList carerChildrenList, ArrayList<Child> childrenList) {
+    private List<Child> childrenList;
+    private CarerChildrenList carerChildrenList;
 
-        this.carerChildrenList = carerChildrenList;
+    public ChildrenRecyclerViewAdapter(CarerChildrenList carerChildrenList, List<Child> childrenList){
+
         this.childrenList = childrenList;
+        this.carerChildrenList = carerChildrenList;
+
     }
 
     @NonNull
     @Override
-    public ChildrenRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(carerChildrenList.getBaseContext());
-        View view = layoutInflater.inflate(R.layout.carer_child_list_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.carer_child_list_item, viewGroup, false);
 
-        return new ChildrenRecyclerViewHolder(view);
+        return new ViewHolder(view);
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChildrenRecyclerViewHolder childrenRecyclerViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        childrenRecyclerViewHolder.mName.setText(childrenList.get(i).getChildName());
-        childrenRecyclerViewHolder.mAge.setText(childrenList.get(i).getChildAge());
+        viewHolder.mName.setText(childrenList.get(i).getChildName());
+        viewHolder.mAge.setText(childrenList.get(i).getChildAge());
 
         long milliseconds = childrenList.get(i).getDateRegistered().getTime();
         String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
-        childrenRecyclerViewHolder.mDateRegistered.setText(dateString);
+        viewHolder.mDateRegistered.setText(dateString);
+
+    }
+
+    public void setClickListener(OnItemClickListener clicklistener){
+
+        this.clicklistener = clicklistener;
 
     }
 
@@ -48,4 +58,49 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
 
         return childrenList.size();
     }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private View view;
+
+        private TextView mName;
+
+        private TextView mAge;
+
+        private TextView mDateRegistered ;
+
+        public ViewHolder(@NonNull View itemView) {
+
+            super(itemView);
+
+            view = itemView;
+
+            view.setOnClickListener(this);
+
+            mName = itemView.findViewById(R.id.children_list_child_name);
+            mAge = itemView.findViewById(R.id.children_list_child_age);
+            mDateRegistered = itemView.findViewById(R.id.children_list_child_registered);
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if(clicklistener != null){
+
+                clicklistener.itemClicked(view, getAdapterPosition());
+
+            }
+
+        }
+    }
+
+    public interface OnItemClickListener{
+
+        void itemClicked(View view, int position);
+
+
+    }
+
 }

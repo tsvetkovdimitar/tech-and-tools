@@ -1,11 +1,13 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,12 +19,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class CarerChildrenList extends AppCompatActivity {
+public class CarerChildrenList extends AppCompatActivity implements ChildrenRecyclerViewAdapter.OnItemClickListener{
 
+    private ChildrenRecyclerViewAdapter childrenRecyclerViewAdapter;
     private FirebaseFirestore db;
     private RecyclerView recyclerView;
     private ArrayList<Child> childrenList;
-    private ChildrenRecyclerViewAdapter childrenRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class CarerChildrenList extends AppCompatActivity {
                         childrenList.add(child);
 
                         childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
+                        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
                         recyclerView.setAdapter(childrenRecyclerViewAdapter);
 
                     }
@@ -92,4 +95,15 @@ public class CarerChildrenList extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    @Override
+    public void itemClicked(View view, int position) {
+
+        Intent dailyActivitiesIntent = new Intent(CarerChildrenList.this, CarerDailyActivitesList.class);
+//        String parentId = usersList.get(position).getUserId();
+//        childrenListIntent.putExtra("userId", parentId);
+        startActivity(dailyActivitiesIntent);
+
+    }
+
 }

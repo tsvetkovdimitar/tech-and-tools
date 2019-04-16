@@ -50,7 +50,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
 
             case R.id.btn_parent_add_child:{
 
-                // insert the new note
+                // insert the new child data
 
                 name = edtChildName.getText().toString();
                 age = edtChildAge.getText().toString();

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CarerChildrenList"></activity>
+        <activity android:name=".CarerDailyActivitesList"></activity>
+        <activity android:name=".CarerChildrenList" />
         <activity android:name=".ParentProfileActivity" />
         <activity android:name=".AddChildActivity" />
         <activity

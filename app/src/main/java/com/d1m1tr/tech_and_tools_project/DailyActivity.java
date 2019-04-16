@@ -1,10 +1,19 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
+@IgnoreExtraProperties
 public class DailyActivity {
 
     private String activityId;
     private String activityType;
     private String activityNote;
+    private @ServerTimestamp
+    Date dateAdded;
+
 
     public DailyActivity(){
 
@@ -20,6 +29,13 @@ public class DailyActivity {
 
     }
 
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
     public String getActivityId() {
         return activityId;
     }

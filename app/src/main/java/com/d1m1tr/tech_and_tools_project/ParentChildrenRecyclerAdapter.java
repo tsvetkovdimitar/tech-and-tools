@@ -62,8 +62,8 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
         private TextView childDateRegistered;
 
         public ViewHolder(@NonNull View itemView) {
-            super(itemView);
 
+            super(itemView);
 
 
             view = itemView;
