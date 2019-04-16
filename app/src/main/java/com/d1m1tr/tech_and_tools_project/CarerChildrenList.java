@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class CarerChildrenList extends AppCompatActivity {
 
-    FirebaseFirestore db;
-    RecyclerView recyclerView;
-    ArrayList<Child> childrenList;
-    ChildrenRecyclerViewAdapter childrenRecyclerViewAdapter;
+    private FirebaseFirestore db;
+    private RecyclerView recyclerView;
+    private ArrayList<Child> childrenList;
+    private ChildrenRecyclerViewAdapter childrenRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +44,39 @@ public class CarerChildrenList extends AppCompatActivity {
 
         }
 
-        db.collection("users").document("bMjtaYmYqFewpeCSVYsJiUUyEKe2").collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        if(getIntent().hasExtra("userId")) {
 
-                for(DocumentSnapshot documentSnapshot: task.getResult()){
+            String parentId = getIntent().getStringExtra("userId");
 
-                    Child child = new Child(documentSnapshot.getString("childName"),
-                                            documentSnapshot.getString("childAge"),
-                                            documentSnapshot.getDate("dateRegistered"),
-                                            documentSnapshot.getString("parentId"));
+            db.collection("users").document(parentId).collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                    childrenList.add(child);
+                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
 
-                    childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
-                    recyclerView.setAdapter(childrenRecyclerViewAdapter);
+                        Child child = new Child(documentSnapshot.getString("childName"),
+                                documentSnapshot.getString("childAge"),
+                                documentSnapshot.getDate("dateRegistered"),
+                                documentSnapshot.getString("parentId"));
+
+                        childrenList.add(child);
+
+                        childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
+                        recyclerView.setAdapter(childrenRecyclerViewAdapter);
+
+                    }
 
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CarerChildrenList.this, "Error ---l---", Toast.LENGTH_LONG).show();
+                    Log.w("---l---", e.getMessage());
 
-                Toast.makeText(CarerChildrenList.this, "Error ---l---", Toast.LENGTH_LONG).show();
-                Log.w("---l---", e.getMessage());
-
-            }
-        });
+                }
+            });
+        }
 
     }
 

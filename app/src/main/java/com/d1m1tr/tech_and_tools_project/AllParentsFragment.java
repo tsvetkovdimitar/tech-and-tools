@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapter.Clicklistener {
+public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapter.OnItemClickListener {
 
     Boolean firstPageFirstLoad = true;
 
@@ -175,15 +175,42 @@ public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapt
     @Override
     public void itemClicked(View view, int position) {
 
-       // firebaseFirestore.collection("users").document("31eL47ZR9ngHblfWH9OOetZHEXI2").collection("children");
-
-       // childrenListIntent.putExtra("userId", "31eL47ZR9ngHblfWH9OOetZHEXI2");
-        String userId = "31eL47ZR9ngHblfWH9OOetZHEXI2";
-       // User user = new User();
         Intent childrenListIntent = new Intent(getActivity(), CarerChildrenList.class);
-
-        childrenListIntent.putExtra("userId", userId);
+        String parentId = usersList.get(position).getUserId();
+        childrenListIntent.putExtra("userId", parentId);
         startActivity(childrenListIntent);
+
+//        Query loadMoreUsersQuery = firebaseFirestore.collection("users")
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .startAfter(lastVisible)
+//                .limit(5);
+//
+//        loadMoreUsersQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//
+//                if(mAuth.getCurrentUser() != null){
+//
+//                    if (!queryDocumentSnapshots.isEmpty()) {
+//
+//                        lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+//
+//                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+//
+//                            if (doc.getType() == DocumentChange.Type.ADDED) {
+//
+//                                parentId = doc.getDocument().getId();
+//                                User user = doc.getDocument().toObject(User.class);
+//                                usersList.add(user);
+//
+//                                parentsRecyclerAdapter.notifyDataSetChanged();
+//                            }
+//
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 }

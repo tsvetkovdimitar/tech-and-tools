@@ -14,8 +14,7 @@ import java.util.List;
 
 public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecyclerAdapter.ViewHolder> {
 
-    private Clicklistener clicklistener;
-
+    private OnItemClickListener clicklistener;
     private List<User> usersList;
     private Context context;
 
@@ -52,12 +51,12 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
         viewHolder.setRegisteredTimestamp(dateString);
 
 
-
     }
 
-    public void setClickListener(Clicklistener clickListener){
+    public void setClickListener(OnItemClickListener clickListener){
 
         this.clicklistener = clickListener;
+
 
     }
 
@@ -87,6 +86,7 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
             view.setOnClickListener(this);
 
             userName = view.findViewById(R.id.all_parents_layout_item_name);
+
         }
 
         public void setParentName(String parentNameText){
@@ -121,10 +121,13 @@ public class ParentsRecyclerAdapter extends RecyclerView.Adapter<ParentsRecycler
         }
     }
 
-    public interface Clicklistener{
 
-        public void itemClicked(View view, int position);
+    public interface OnItemClickListener{
+
+       void itemClicked(View view, int position);
+
 
     }
+
 
 }
