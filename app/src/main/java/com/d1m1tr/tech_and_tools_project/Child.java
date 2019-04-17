@@ -6,7 +6,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 @IgnoreExtraProperties
-public class Child {
+public class Child extends GetId{
 
 
     private String childName;
@@ -14,6 +14,7 @@ public class Child {
     private @ServerTimestamp
     Date dateRegistered;
     private String parentId;
+    private String childId;
 
 
     public Child(){

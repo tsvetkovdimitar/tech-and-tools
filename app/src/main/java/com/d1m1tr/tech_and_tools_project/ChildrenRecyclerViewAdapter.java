@@ -1,5 +1,6 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRecyclerViewAdapter.ViewHolder>{
 
-    private OnItemClickListener clicklistener;
+//    private OnItemClickListener clicklistener;
 
     private List<Child> childrenList;
     private CarerChildrenList carerChildrenList;
@@ -41,17 +42,30 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
         viewHolder.mName.setText(childrenList.get(i).getChildName());
         viewHolder.mAge.setText(childrenList.get(i).getChildAge());
 
+        final String childId = childrenList.get(i).id;
+
         long milliseconds = childrenList.get(i).getDateRegistered().getTime();
         String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
         viewHolder.mDateRegistered.setText(dateString);
 
+        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent dailyActivitiesIntent = new Intent(view.getContext(), CarerDailyActivitiesList.class);
+                dailyActivitiesIntent.putExtra("childId", childId);
+                view.getContext().startActivity(dailyActivitiesIntent);
+
+            }
+        });
+
     }
 
-    public void setClickListener(OnItemClickListener clicklistener){
-
-        this.clicklistener = clicklistener;
-
-    }
+//    public void setClickListener(OnItemClickListener clicklistener){
+//
+//        this.clicklistener = clicklistener;
+//
+//    }
 
     @Override
     public int getItemCount() {
@@ -59,7 +73,7 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
         return childrenList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private View view;
 
@@ -75,7 +89,7 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
 
             view = itemView;
 
-            view.setOnClickListener(this);
+//            view.setOnClickListener(this);
 
             mName = itemView.findViewById(R.id.children_list_child_name);
             mAge = itemView.findViewById(R.id.children_list_child_age);
@@ -84,23 +98,23 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
 
         }
 
-        @Override
-        public void onClick(View view) {
-
-            if(clicklistener != null){
-
-                clicklistener.itemClicked(view, getAdapterPosition());
-
-            }
-
-        }
+//        @Override
+//        public void onClick(View view) {
+//
+//            if(clicklistener != null){
+//
+//                clicklistener.itemClicked(view, getAdapterPosition());
+//
+//            }
+//
+//        }
     }
 
-    public interface OnItemClickListener{
-
-        void itemClicked(View view, int position);
-
-
-    }
+//    public interface OnItemClickListener{
+//
+//        void itemClicked(View view, int position);
+//
+//
+//    }
 
 }

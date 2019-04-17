@@ -127,7 +127,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {
 
-
+                    Toast.makeText(getActivity(), "Child is added", Toast.LENGTH_LONG).show();
 
                 }
             });

@@ -1,25 +1,22 @@
 package com.d1m1tr.tech_and_tools_project;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class CarerChildrenList extends AppCompatActivity implements ChildrenRecyclerViewAdapter.OnItemClickListener{
+import javax.annotation.Nullable;
+
+public class CarerChildrenList extends AppCompatActivity{
 
     private ChildrenRecyclerViewAdapter childrenRecyclerViewAdapter;
     private FirebaseFirestore db;
@@ -34,6 +31,11 @@ public class CarerChildrenList extends AppCompatActivity implements ChildrenRecy
         childrenList = new ArrayList<>();
 
         setUpRecyclerView();
+
+        childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
+//        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
+        recyclerView.setAdapter(childrenRecyclerViewAdapter);
+
         setUpFireBase();
         loadDataFromFireStore();
     }
@@ -50,36 +52,76 @@ public class CarerChildrenList extends AppCompatActivity implements ChildrenRecy
 
             String parentId = getIntent().getStringExtra("userId");
 
-            db.collection("users").document(parentId).collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection("users").document(parentId).collection("children").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                    if(e != null){
 
-                        Child child = new Child(documentSnapshot.getString("childName"),
-                                documentSnapshot.getString("childAge"),
-                                documentSnapshot.getDate("dateRegistered"),
-                                documentSnapshot.getString("parentId"));
+                        Toast.makeText(CarerChildrenList.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
-                        childrenList.add(child);
+                    }
+                    else{
 
-                        childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
-                        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
-                        recyclerView.setAdapter(childrenRecyclerViewAdapter);
+                        for(DocumentChange doc: queryDocumentSnapshots.getDocumentChanges()){
+
+                            if(doc.getType() == DocumentChange.Type.ADDED){
+
+                                String childId = doc.getDocument().getId().trim();
+
+                                Child child = doc.getDocument().toObject(Child.class).withId(childId);
+                                childrenList.add(child);
+
+                                childrenRecyclerViewAdapter.notifyDataSetChanged();
+
+                            }
+
+                        }
 
                     }
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(CarerChildrenList.this, "Error ---l---", Toast.LENGTH_LONG).show();
-                    Log.w("---l---", e.getMessage());
 
                 }
             });
+
         }
+
+
+//        if(getIntent().hasExtra("userId")) {
+//
+//            String parentId = getIntent().getStringExtra("userId");
+//
+//            db.collection("users").document(parentId).collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+//
+//                        Child child = new Child(documentSnapshot.getString("childName"),
+//                                documentSnapshot.getString("childAge"),
+//                                documentSnapshot.getDate("dateRegistered"),
+//                                documentSnapshot.getString("parentId"));
+//
+//                        childrenList.add(child);
+//
+//                        childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
+//                        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
+//                        recyclerView.setAdapter(childrenRecyclerViewAdapter);
+//
+//                    }
+//
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//
+//                    Toast.makeText(CarerChildrenList.this, "Error ---l---", Toast.LENGTH_LONG).show();
+//                    Log.w("---l---", e.getMessage());
+//
+//                }
+//            });
+//        }
 
     }
 
@@ -96,14 +138,14 @@ public class CarerChildrenList extends AppCompatActivity implements ChildrenRecy
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @Override
-    public void itemClicked(View view, int position) {
-
-        Intent dailyActivitiesIntent = new Intent(CarerChildrenList.this, CarerDailyActivitesList.class);
-//        String parentId = usersList.get(position).getUserId();
-//        childrenListIntent.putExtra("userId", parentId);
-        startActivity(dailyActivitiesIntent);
-
-    }
+//    @Override
+//    public void itemClicked(View view, int position) {
+//
+//        Intent dailyActivitiesIntent = new Intent(CarerChildrenList.this, CarerDailyActivitiesList.class);
+////        String childId = childrenList.get(position).getParentId();
+//        dailyActivitiesIntent.putExtra("childId", childId);
+//        startActivity(dailyActivitiesIntent);
+//
+//    }
 
 }

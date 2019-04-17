@@ -12,12 +12,12 @@ import java.util.Date;
 
 public class CarerDailyActivitiesAdapter extends RecyclerView.Adapter<CarerDailyActivitiesViewHolder> {
 
-    private CarerDailyActivitesList carerDailyActivitesList;
+    private CarerDailyActivitiesList carerDailyActivitiesList;
     private ArrayList<DailyActivity> dailyActivityArrayList;
 
-    public CarerDailyActivitiesAdapter(CarerDailyActivitesList carerDailyActivitesList, ArrayList<DailyActivity> dailyActivityArrayList){
+    public CarerDailyActivitiesAdapter(CarerDailyActivitiesList carerDailyActivitiesList, ArrayList<DailyActivity> dailyActivityArrayList){
 
-        this.carerDailyActivitesList = carerDailyActivitesList;
+        this.carerDailyActivitiesList = carerDailyActivitiesList;
         this.dailyActivityArrayList = dailyActivityArrayList;
 
     }
@@ -26,7 +26,7 @@ public class CarerDailyActivitiesAdapter extends RecyclerView.Adapter<CarerDaily
     @Override
     public CarerDailyActivitiesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(carerDailyActivitesList.getBaseContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(carerDailyActivitiesList.getBaseContext());
         View view = layoutInflater.inflate(R.layout.carer_daily_activity_list_item, viewGroup, false);
 
         return new CarerDailyActivitiesViewHolder(view);
