@@ -43,6 +43,7 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
         viewHolder.mAge.setText(childrenList.get(i).getChildAge());
 
         final String childId = childrenList.get(i).id;
+        final String parentId = childrenList.get(i).getParentId();
 
         long milliseconds = childrenList.get(i).getDateRegistered().getTime();
         String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
@@ -54,6 +55,7 @@ public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRe
 
                 Intent dailyActivitiesIntent = new Intent(view.getContext(), CarerDailyActivitiesList.class);
                 dailyActivitiesIntent.putExtra("childId", childId);
+                dailyActivitiesIntent.putExtra("parentId", parentId);
                 view.getContext().startActivity(dailyActivitiesIntent);
 
             }

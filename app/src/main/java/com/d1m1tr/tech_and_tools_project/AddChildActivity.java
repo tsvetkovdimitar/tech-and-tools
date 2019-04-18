@@ -76,9 +76,9 @@ public class AddChildActivity extends AppCompatActivity {
 
                 dailyActivities.clear();
 
-                for(DataSnapshot childactivitySnapshot: dataSnapshot.getChildren() ){
+                for(DataSnapshot childActivitySnapshot: dataSnapshot.getChildren() ){
 
-                    DailyActivity dailyActivity = childactivitySnapshot.getValue(DailyActivity.class);
+                    DailyActivity dailyActivity = childActivitySnapshot.getValue(DailyActivity.class);
                     dailyActivities.add(dailyActivity);
 
                 }
@@ -102,9 +102,9 @@ public class AddChildActivity extends AppCompatActivity {
 
             String id = databaseActivities.push().getKey();
 
-            DailyActivity dailyActivity = new DailyActivity(id, activityType, activityNote);
+//            DailyActivity dailyActivity = new DailyActivity(id, activityType, activityNote);
 
-            databaseActivities.child(id).setValue(dailyActivity);
+//            databaseActivities.child(id).setValue(dailyActivity);
 
             Toast.makeText(this, "Activity successfully added", Toast.LENGTH_LONG).show();
 

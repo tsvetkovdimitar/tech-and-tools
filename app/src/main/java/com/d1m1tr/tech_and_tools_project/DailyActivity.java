@@ -8,7 +8,6 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class DailyActivity {
 
-    private String activityId;
     private String activityType;
     private String activityNote;
     private @ServerTimestamp
@@ -21,27 +20,16 @@ public class DailyActivity {
 
     }
 
-    public DailyActivity(String activityId, String activityType, String activityNote){
+    public DailyActivity(String activityType, String activityNote, Date dateAdded){
 
-        this.activityId = activityId;
         this.activityType = activityType;
         this.activityNote = activityNote;
+        this.dateAdded = dateAdded;
 
     }
 
     public Date getDateAdded() {
         return dateAdded;
-    }
-
-    public void setDateAdded(Date dateAdded) {
-        this.dateAdded = dateAdded;
-    }
-    public String getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(String activityId) {
-        this.activityId = activityId;
     }
 
     public String getActivityType() {

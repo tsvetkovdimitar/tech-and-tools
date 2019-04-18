@@ -1,6 +1,7 @@
 package com.d1m1tr.tech_and_tools_project;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -11,9 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ServerTimestamp;
 
@@ -33,6 +37,9 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
     private @ServerTimestamp
     Date dateTimeAdded;
     private String userId;
+
+    private String parentId;
+    private String childId;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -58,12 +65,14 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
 
         userId = mUser.getUid();
 
-
 }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        childId = getArguments().getString("childId");
+        parentId = getArguments().getString("parentId");
 
         View view = inflater.inflate(R.layout.add_daily_activity_dialog, container, false);
         edtActivityType = view.findViewById(R.id.edt_daily_activity_type);
@@ -114,18 +123,18 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
 
     public void addDailyActivity(){
 
-//        if(mUser != null) {
-//
-//            DailyActivity dailyActivity = new DailyActivity(name, age, dateRegistered, userId);
-//            final String uid = mUser.getUid();
-//            userRef.document(uid).collection("children").add(child).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DocumentReference> task) {
-//
-//                    Toast.makeText(getActivity(), "Child is added", Toast.LENGTH_LONG).show();
-//
-//                }
-//            });
-//        }
+        if(mUser != null) {
+
+            DailyActivity dailyActivity = new DailyActivity(type, note, dateTimeAdded);
+            userRef.document(parentId).collection("children").document(childId)
+                    .collection("dailyActivities").add(dailyActivity).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+
+
+
+                }
+            });
+        }
     }
 }

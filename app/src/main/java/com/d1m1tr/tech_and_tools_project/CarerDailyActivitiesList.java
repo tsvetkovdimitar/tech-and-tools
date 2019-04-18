@@ -21,23 +21,31 @@ public class CarerDailyActivitiesList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                openAddDailyActivityDialog();
+                if(getIntent().hasExtra("childId") && getIntent().hasExtra("parentId")) {
 
+                    String childId = getIntent().getStringExtra("childId");
+                    String parentId = getIntent().getStringExtra("parentId");
+
+                    Toast.makeText(CarerDailyActivitiesList.this, "The child ID is: " + childId +
+                            " And parent ID is: " + parentId, Toast.LENGTH_LONG).show();
+
+                    openAddDailyActivityDialog(parentId, childId);
+
+                }
             }
         });
 
-        if(getIntent().hasExtra("childId")) {
-
-            String childId = getIntent().getStringExtra("childId");
-
-            Toast.makeText(CarerDailyActivitiesList.this, "The child ID is: " + childId, Toast.LENGTH_LONG).show();
-        }
     }
 
-    private void openAddDailyActivityDialog() {
+    private void openAddDailyActivityDialog(String parentId, String childId) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("parentId", parentId);
+        bundle.putString("childId", childId);
 
         AddDailyActivityDialog addDailyActivityDialog = new AddDailyActivityDialog();
         addDailyActivityDialog.show(getSupportFragmentManager(), "Daily Activity Dialog");
+        addDailyActivityDialog.setArguments(bundle);
 
     }
 }

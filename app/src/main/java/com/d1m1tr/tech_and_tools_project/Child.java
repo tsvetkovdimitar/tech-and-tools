@@ -14,7 +14,6 @@ public class Child extends GetId{
     private @ServerTimestamp
     Date dateRegistered;
     private String parentId;
-    private String childId;
 
 
     public Child(){
