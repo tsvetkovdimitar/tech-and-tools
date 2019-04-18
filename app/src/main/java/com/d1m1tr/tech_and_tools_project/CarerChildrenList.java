@@ -33,7 +33,6 @@ public class CarerChildrenList extends AppCompatActivity{
         setUpRecyclerView();
 
         childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
-//        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
         recyclerView.setAdapter(childrenRecyclerViewAdapter);
 
         setUpFireBase();
@@ -80,48 +79,10 @@ public class CarerChildrenList extends AppCompatActivity{
 
                     }
 
-
-
                 }
             });
 
         }
-
-
-//        if(getIntent().hasExtra("userId")) {
-//
-//            String parentId = getIntent().getStringExtra("userId");
-//
-//            db.collection("users").document(parentId).collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//
-//                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
-//
-//                        Child child = new Child(documentSnapshot.getString("childName"),
-//                                documentSnapshot.getString("childAge"),
-//                                documentSnapshot.getDate("dateRegistered"),
-//                                documentSnapshot.getString("parentId"));
-//
-//                        childrenList.add(child);
-//
-//                        childrenRecyclerViewAdapter = new ChildrenRecyclerViewAdapter(CarerChildrenList.this, childrenList);
-//                        childrenRecyclerViewAdapter.setClickListener(CarerChildrenList.this);
-//                        recyclerView.setAdapter(childrenRecyclerViewAdapter);
-//
-//                    }
-//
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//
-//                    Toast.makeText(CarerChildrenList.this, "Error ---l---", Toast.LENGTH_LONG).show();
-//                    Log.w("---l---", e.getMessage());
-//
-//                }
-//            });
-//        }
 
     }
 
@@ -137,15 +98,4 @@ public class CarerChildrenList extends AppCompatActivity{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
-//    @Override
-//    public void itemClicked(View view, int position) {
-//
-//        Intent dailyActivitiesIntent = new Intent(CarerChildrenList.this, CarerDailyActivitiesList.class);
-////        String childId = childrenList.get(position).getParentId();
-//        dailyActivitiesIntent.putExtra("childId", childId);
-//        startActivity(dailyActivitiesIntent);
-//
-//    }
-
 }

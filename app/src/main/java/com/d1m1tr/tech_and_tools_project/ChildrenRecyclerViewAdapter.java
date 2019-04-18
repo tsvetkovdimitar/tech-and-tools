@@ -15,9 +15,8 @@ import java.util.List;
 public class ChildrenRecyclerViewAdapter extends RecyclerView.Adapter<ChildrenRecyclerViewAdapter.ViewHolder>{
 
 //    private OnItemClickListener clicklistener;
-
-    private List<Child> childrenList;
     private CarerChildrenList carerChildrenList;
+    private List<Child> childrenList;
 
     public ChildrenRecyclerViewAdapter(CarerChildrenList carerChildrenList, List<Child> childrenList){
 

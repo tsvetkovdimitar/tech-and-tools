@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class AddDailyActivityDialog extends AppCompatDialogFragment implements View.OnClickListener {
 
     private static final String TAG = "AddDailyActivityDialog";
@@ -71,8 +73,13 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        childId = getArguments().getString("childId");
-        parentId = getArguments().getString("parentId");
+        if(!getArguments().isEmpty()){
+
+            childId = getArguments().getString("childId");
+            parentId = getArguments().getString("parentId");
+
+        }
+
 
         View view = inflater.inflate(R.layout.add_daily_activity_dialog, container, false);
         edtActivityType = view.findViewById(R.id.edt_daily_activity_type);
@@ -125,13 +132,13 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
 
         if(mUser != null) {
 
+            dateTimeAdded = new Date();
+
             DailyActivity dailyActivity = new DailyActivity(type, note, dateTimeAdded);
             userRef.document(parentId).collection("children").document(childId)
                     .collection("dailyActivities").add(dailyActivity).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {
-
-
 
                 }
             });

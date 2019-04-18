@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -31,7 +30,7 @@ import javax.annotation.Nullable;
  */
 public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapter.OnItemClickListener {
 
-    Boolean firstPageFirstLoad = true;
+    private Boolean firstPageFirstLoad = true;
 
    private View usersView;
    private RecyclerView allParentsRecyclerView;
@@ -42,9 +41,9 @@ public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapt
    private ParentsRecyclerAdapter parentsRecyclerAdapter;
    private DocumentSnapshot lastVisible;
 
-    private FirebaseAuth mAuth;
+   private FirebaseAuth mAuth;
 
-    public AllParentsFragment() {
+   public AllParentsFragment() {
         // Required empty public constructor
     }
 
@@ -80,9 +79,6 @@ public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapt
 
                     if(reachedBottom){
 
-                        String name = lastVisible.getString("userName");
-                        Toast.makeText(container.getContext(), "Reached" + name, Toast.LENGTH_LONG).show();
-
                         loadUsers();
 
                     }
@@ -97,7 +93,7 @@ public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapt
 
                     if(queryDocumentSnapshots != null){
 
-                        if(firstPageFirstLoad){
+                        if(firstPageFirstLoad && queryDocumentSnapshots.size() > 0){
 
                             lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() -1);
 
@@ -139,37 +135,39 @@ public class AllParentsFragment extends Fragment implements ParentsRecyclerAdapt
 
     public void loadUsers(){
 
-            Query loadMoreUsersQuery = firebaseFirestore.collection("users")
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .startAfter(lastVisible)
-                    .limit(5);
+       if(lastVisible != null) {
 
-            loadMoreUsersQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+           Query loadMoreUsersQuery = firebaseFirestore.collection("users")
+                   .orderBy("timestamp", Query.Direction.DESCENDING)
+                   .startAfter(lastVisible)
+                   .limit(5);
 
-                    if(mAuth.getCurrentUser() != null){
+           loadMoreUsersQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+               @Override
+               public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                        if (!queryDocumentSnapshots.isEmpty()) {
+                   if (mAuth.getCurrentUser() != null) {
 
-                            lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                       if (!queryDocumentSnapshots.isEmpty()) {
 
-                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                           lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
 
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                           for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-                                    User user = doc.getDocument().toObject(User.class);
-                                    usersList.add(user);
+                               if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                    parentsRecyclerAdapter.notifyDataSetChanged();
-                                }
+                                   User user = doc.getDocument().toObject(User.class);
+                                   usersList.add(user);
 
-                            }
-                        }
-                    }
-                }
-            });
+                                   parentsRecyclerAdapter.notifyDataSetChanged();
+                               }
 
+                           }
+                       }
+                   }
+               }
+           });
+       }
     }
 
     @Override

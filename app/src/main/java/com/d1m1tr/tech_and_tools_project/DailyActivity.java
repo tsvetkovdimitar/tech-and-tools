@@ -13,12 +13,12 @@ public class DailyActivity {
     private @ServerTimestamp
     Date dateAdded;
 
-
     public DailyActivity(){
 
 
 
     }
+
 
     public DailyActivity(String activityType, String activityNote, Date dateAdded){
 
@@ -26,6 +26,10 @@ public class DailyActivity {
         this.activityNote = activityNote;
         this.dateAdded = dateAdded;
 
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public Date getDateAdded() {
