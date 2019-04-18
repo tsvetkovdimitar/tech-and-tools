@@ -112,7 +112,7 @@ public class AddChildDialog extends DialogFragment implements View.OnClickListen
 
         btnAddChild.setOnClickListener(this);
 
-        getDialog().setTitle("New Note");
+        getDialog().setTitle("Add a child");
 
         return view;
     }

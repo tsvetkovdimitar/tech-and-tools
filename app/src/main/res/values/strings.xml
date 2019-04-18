@@ -28,4 +28,6 @@
     <string name="parent_child_age_text">Age :</string>
     <string name="carer_children_list_child_age_text">Age :</string>
     <string name="carer_children_list_child_registered_text">Date registered :</string>
+    <string name="edt_daily_activity_type_text">Activity type</string>
+    <string name="edt_daily_activity_note_text">Add a note</string>
 </resources>
