@@ -1,5 +1,6 @@
 package com.d1m1tr.tech_and_tools_project;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -37,6 +38,9 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
         String childName = childrenList.get(i).getChildName();
         viewHolder.setChildName(childName);
 
+        final String childId = childrenList.get(i).id;
+        final String parentId = childrenList.get(i).getParentId();
+
         String childAge = childrenList.get(i).getChildAge();
         viewHolder.setChildAge(childAge);
 
@@ -44,6 +48,18 @@ public class ParentChildrenRecyclerAdapter extends RecyclerView.Adapter<ParentCh
         String dateString = DateFormat.format("MM/dd/yyyy HH:mm", new Date(milliseconds)).toString();
 
         viewHolder.setChildDateRegistered(dateString);
+
+        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent dailyActivitiesIntent = new Intent(view.getContext(), ParentDailyActivitiesList.class);
+                dailyActivitiesIntent.putExtra("childId", childId);
+                dailyActivitiesIntent.putExtra("parentId", parentId);
+                view.getContext().startActivity(dailyActivitiesIntent);
+
+            }
+        });
 
     }
 

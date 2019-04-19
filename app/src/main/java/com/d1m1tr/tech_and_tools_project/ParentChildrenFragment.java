@@ -76,7 +76,9 @@ public class ParentChildrenFragment extends Fragment {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                Child child = doc.getDocument().toObject(Child.class);
+                                String childId = doc.getDocument().getId().trim();
+
+                                Child child = doc.getDocument().toObject(Child.class).withId(childId);
                                 childrenList.add(child);
 
                                 parentChildrenRecyclerAdapter.notifyDataSetChanged();

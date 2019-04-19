@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -34,7 +33,7 @@ public class CarerDailyActivitiesList extends AppCompatActivity {
     private FirebaseUser mUser;
 
 
-    private CollectionReference dailyActivitiesRef;
+//    private CollectionReference dailyActivitiesRef;
 
     private RecyclerView recyclerView;
 

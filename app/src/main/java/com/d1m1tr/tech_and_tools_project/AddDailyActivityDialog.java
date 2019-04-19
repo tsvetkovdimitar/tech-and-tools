@@ -80,7 +80,6 @@ public class AddDailyActivityDialog extends AppCompatDialogFragment implements V
 
         }
 
-
         View view = inflater.inflate(R.layout.add_daily_activity_dialog, container, false);
         edtActivityType = view.findViewById(R.id.edt_daily_activity_type);
         edtActivityNote = view.findViewById(R.id.edt_daily_activity_note);

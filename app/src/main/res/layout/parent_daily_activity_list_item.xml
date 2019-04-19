@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/parent_daily_activity_type_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/browser_actions_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="Activity: " />
+
+    <TextView
+        android:id="@+id/parent_daily_activity_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/parent_daily_activity_note_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/browser_actions_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="Note: " />
+
+    <TextView
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:id="@+id/parent_daily_activity_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/parent_daily_activity_date_added_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/browser_actions_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="Date/Time: "/>
+
+    <TextView
+        android:id="@+id/parent_daily_activity_date_added"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

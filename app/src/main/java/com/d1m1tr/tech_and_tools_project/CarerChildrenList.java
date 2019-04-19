@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,10 +25,16 @@ public class CarerChildrenList extends AppCompatActivity{
     private RecyclerView recyclerView;
     private ArrayList<Child> childrenList;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carer_children_list);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         childrenList = new ArrayList<>();
 
@@ -47,41 +55,43 @@ public class CarerChildrenList extends AppCompatActivity{
 
         }
 
-        if(getIntent().hasExtra("userId")) {
+        if(mUser != null) {
 
-            String parentId = getIntent().getStringExtra("userId");
+            if (getIntent().hasExtra("userId")) {
 
-            db.collection("users").document(parentId).collection("children").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                String parentId = getIntent().getStringExtra("userId");
 
-                    if(e != null){
+                db.collection("users").document(parentId).collection("children")
+                        .addSnapshotListener(CarerChildrenList.this, new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                        Toast.makeText(CarerChildrenList.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                if (e != null) {
 
-                    }
-                    else{
+                                    Toast.makeText(CarerChildrenList.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
-                        for(DocumentChange doc: queryDocumentSnapshots.getDocumentChanges()){
+                                } else {
 
-                            if(doc.getType() == DocumentChange.Type.ADDED){
+                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-                                String childId = doc.getDocument().getId().trim();
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                Child child = doc.getDocument().toObject(Child.class).withId(childId);
-                                childrenList.add(child);
+                                            String childId = doc.getDocument().getId().trim();
 
-                                childrenRecyclerViewAdapter.notifyDataSetChanged();
+                                            Child child = doc.getDocument().toObject(Child.class).withId(childId);
+                                            childrenList.add(child);
+
+                                            childrenRecyclerViewAdapter.notifyDataSetChanged();
+
+                                        }
+
+                                    }
+
+                                }
 
                             }
-
-                        }
-
-                    }
-
-                }
-            });
-
+                        });
+            }
         }
 
     }
